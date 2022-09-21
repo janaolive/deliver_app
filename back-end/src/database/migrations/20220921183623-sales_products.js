@@ -1,21 +1,38 @@
 'use strict';
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    /**
-     * Add altering commands here.
-     *
-     * Example:
-     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
-     */
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('sales_products', {
+      sale_id: {
+        allowNull: false,
+        field: 'sale_id',
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'sales',
+          },
+          key: 'id',
+        },
+      },
+      product_id: {
+        allowNull: false,
+        field: 'product_id',
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'products',
+          },
+          key: 'id',
+        },
+      },
+      quantity: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+    });
   },
 
-  async down (queryInterface, Sequelize) {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
+  down: async (queryInterface, _Sequelize) => {
+    await queryInterface.dropTable('sales_products');
   }
 };
