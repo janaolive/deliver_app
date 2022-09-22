@@ -1,33 +1,29 @@
-import { INTEGER, STRING } from 'sequelize';
-import db from '.';
-
-Products.init(
-  {
+const Product = (sequelize, DataTypes) => {
+  const Product = sequelize.define('Product', {
     id: {
-      type: INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
     },
     name: {
-      type: STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     price: {
-      type: INTEGER,
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
     urlImage: {
-      type: STRING,
+      type: DataTypes.STRING,
       allowNull: false,
+      field: 'url_image'
     },
-  },
-  {
-    underscored: true,
-    sequelize: db,
-    // modelName: 'example',
+  }, {
     timestamps: false,
-  },
-);
+    tableName: 'products',
+  });
 
-export default Products;
+  return Product;
+};
+
+module.exports = Product;
