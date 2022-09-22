@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, FormGroup, Input, Label, Button, Alert, Container } from 'reactstrap';
 
 function LoginForm() {
-  const alert = (
-    <Alert
-      color="danger"
-    >
-      This is a primary alert — check it out!
-    </Alert>);
-  const [errorMessage, setMessage] = useState(false);
-  const showOrHide = () => {
-    if (errorMessage === true) setMessage(false);
-    if (errorMessage === false) setMessage(true);
-  };
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch('/login')
+      .then((res) => res.json())
+      .then((dataReturn) => setData(dataReturn.message));
+  }, []);
+
   return (
     <main>
       <div>
@@ -46,6 +43,7 @@ function LoginForm() {
           <Button
             color="success"
             data-testid="common_login__button-login"
+            type="submit"
           >
             Login
           </Button>
@@ -53,13 +51,12 @@ function LoginForm() {
             outline
             color="success"
             data-testid="common_login__button-register"
-            onClick={ showOrHide }
           >
             Ainda não tenho conta
           </Button>
         </Form>
       </Container>
-      { errorMessage ? alert : null }
+      { data ? <Alert color="danger">{ data }</Alert> : null }
     </main>
   );
 }
