@@ -1,6 +1,6 @@
-const models = require('../database/models');
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
+const models = require('../database/models');
 const ValidateError = require('../middlewares/ValidateError');
 const { setToken } = require('../middlewares/tokenMiddleware');
 
@@ -13,9 +13,11 @@ const schema = Joi.object({
 });
 
 const loginService = {
-  async login(email, password) {
+  async login(body) {
     const { error } = schema.validate(body);
     if (error) throw new ValidateError(400, error.message);
+
+    const { email, password } = body;
 
     const dataValues = await models.User.findOne({
       where: { email },
@@ -30,7 +32,7 @@ const loginService = {
     const token = setToken({ email, password });
 
     return { token };
-  }
-}
+  },
+};
 
 module.exports = loginService;

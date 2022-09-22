@@ -1,5 +1,4 @@
-const loginService = require("../services/loginService");
-
+const loginService = require('../services/loginService');
 
 const loginController = {
   async login(req, res) {
@@ -13,6 +12,6 @@ const loginController = {
         : res.status(500).json({ message: error.message });
     }
   },
-}
+};
 
 module.exports = loginController;
