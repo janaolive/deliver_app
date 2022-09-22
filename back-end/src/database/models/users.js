@@ -1,37 +1,41 @@
-import db from '.';
-import { INTEGER, STRING } from 'sequelize';
-
-Users.init(
-  {
+const User = (sequelize, DataTypes) => {
+  const User = sequelize.define('User', {
     id: {
-      type: INTEGER,
-      primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.INTEGER
     },
     name: {
-      type: STRING,
       allowNull: false,
+      type: DataTypes.STRING,
     },
     email: {
-      type: STRING,
       allowNull: false,
+      type: DataTypes.STRING,
     },
     password: {
-      type: STRING,
       allowNull: false,
+      type: DataTypes.STRING,
     },
     role: {
-      type: STRING,
       allowNull: false,
+      type: DataTypes.STRING,
     },
-  },
-  {
-    underscored: true,
-    sequelize: db,
-    // modelName: 'example',
+  }, {
     timestamps: false,
-  },
-);
+    tableName: 'users',
+  });
 
-export default Users;
+  User.associate = (models) => {
+    User.hasMany(models.Sale, {
+      foreignKey: 'id', as: 'userId'
+    });
+    User.hasMany(models.Sale, {
+      foreignKey: 'id', as: 'sellerId'
+    });
+  };
+
+  return User;
+};
+
+module.exports = User;
