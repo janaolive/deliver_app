@@ -1,56 +1,55 @@
-import { INTEGER, STRING } from 'sequelize';
-import db from '.';
-import Users from './users';
-
-Sales.init(
-  {
-    id: {
-      type: INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-    },
+const Sale = (sequelize, DataTypes) => {
+  const Sale = sequelize.define('Sale', {
     userId: {
-      type: INTEGER,
-      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+      field: 'user_id'
     },
     sellerId: {
-      type: INTEGER,
-      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+      field: 'seller_id'
     },
     totalPrice: {
-      type: INTEGER,
       allowNull: false,
+      type: DataTypes.DECIMAL,
+      field: 'total_price'
     },
     deliveryAddress: {
-      type: STRING,
       allowNull: false,
+      type: DataTypes.STRING,
+      field: 'delivery_address'
     },
     deliveryNumber: {
-      type: STRING,
       allowNull: false,
+      type: DataTypes.INTEGER,
+      field: 'delivery_number'
     },
     saleDate: {
-      type: DATE,
       allowNull: false,
+      type: DataTypes.DATE,
+      field: 'sale_date'
     },
     status: {
-      type: STRING,
       allowNull: false,
+      type: DataTypes.STRING,
     },
-  },
-  {
-    // ... Outras configs
-    underscored: true,
-    sequelize: db,
-    // modelName: 'example',
+  }, {
     timestamps: false,
-  },
-);
+    tableName: 'sales',
+  });
 
-Users.hasMany(Sales, { foreignKey: 'userId'});
-Users.hasMany(Sales, { foreignKey: 'sellerId'});
-Sales.belongsTo(Users, { foreignKey: 'userId'});
-Sales.belongsTo(Users, { foreignKey: 'sellerId'});
+  Sale.associate = (models) => {
+    Sale.belongsTo(models.User, {
+      foreignKey: 'userId', as: 'user'
+    });
 
-export default Sales;
+    Sale.belongsTo(models.User, {
+      foreignKey: 'sellerId', as: 'seller'
+    });
+  }
+
+  return Sale;
+};
+
+module.exports = Sale;
