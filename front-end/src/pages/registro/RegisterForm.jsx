@@ -1,17 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, FormGroup, Input, Label, Button, Alert, Container } from 'reactstrap';
+import { validateLogin } from '../../services/validateLogin';
 
 function RegisterForm() {
-  const alert = (
-    <Alert
-      color="danger"
-    >
-      This is a primary alert — check it out!
-    </Alert>);
-  const [errorMessage, setMessage] = useState(false);
-  const showOrHide = () => {
-    if (errorMessage === true) setMessage(false);
-    if (errorMessage === false) setMessage(true);
+  const { setUser } = useContext(UserContext);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showError, setError] = useState(false);
+
+  const redirect = useNavigate();
+
+  const handleSubmit = async () => {
+    try {
+      const login = await api.post('/register', { name, email, password });
+      setUser(login);
+      localStorage.setItem('user', JSON.stringify(login.data));
+      await redirect('/customer/products');
+    } catch (error) {
+      setError(true);
+    }
   };
   return (
     <main>
@@ -24,6 +32,7 @@ function RegisterForm() {
             </Label>
             <Input
               data-testid="common_register__input-name"
+              onChange={ ({ target: { value } }) => setName(value) }
               name="Name"
               placeholder="Nome"
               type="text"
@@ -35,6 +44,7 @@ function RegisterForm() {
             </Label>
             <Input
               data-testid="common_register__input-email"
+              onChange={ ({ target: { value } }) => setEmail(value) }
               name="email"
               placeholder="Email"
               type="email"
@@ -46,6 +56,7 @@ function RegisterForm() {
             </Label>
             <Input
               data-testid="common_register__input-password"
+              onChange={ ({ target: { value } }) => setPassword(value) }
               name="password"
               placeholder="Senha"
               type="password"
@@ -53,14 +64,15 @@ function RegisterForm() {
           </FormGroup>
           <Button
             color="success"
-            onClick={ showOrHide }
+            onClick={ handleSubmit }
             data-testid="common_register__button-register"
+            disabled={ validateLogin(email, password) }
           >
             Cadastrar
           </Button>
         </Form>
       </Container>
-      { errorMessage ? alert : null }
+      { showError ? <Alert color="danger">This </Alert> : null }
     </main>
   );
 }
