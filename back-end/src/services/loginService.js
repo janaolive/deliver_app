@@ -23,7 +23,7 @@ const loginService = {
       where: { email }, raw: true,
     });
 
-    if (!dataValues) throw ValidateError(401, 'Incorrect email or password');
+    if (!dataValues) throw ValidateError(404, 'Incorrect email or password');
 
     const { id, name, role } = dataValues;
 
