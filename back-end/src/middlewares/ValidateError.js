@@ -1,1 +1,15 @@
-module.exports = (status, message) => ({ status, message });
+class ValidateError extends Error {
+  _status;
+
+  constructor(status, message) {
+    super(message);
+    this._status = status;
+    this.message = message;
+  }
+
+  get status() {
+    return this._status;
+  }
+}
+
+module.exports = ValidateError;
