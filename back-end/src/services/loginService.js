@@ -1,6 +1,6 @@
 const Joi = require('joi');
-// const bcrypt = require('bcrypt');
-const models = require('../database/models');
+const bcrypt = require('bcrypt');
+const db = require('../database/models');
 const ValidateError = require('../middlewares/ValidateError');
 const { setToken } = require('../middlewares/tokenMiddleware');
 
@@ -19,17 +19,19 @@ const loginService = {
 
     const { email, password } = body;
 
-    const dataValues = await models.User.findOne({
-      where: { email },
+    const dataValues = await db.User.findOne({
+      where: { email }, raw: true,
     });
 
     if (!dataValues) throw ValidateError(401, 'Incorrect email or password');
 
-    // const verified = await bcrypt.compare(password, dataValues.password);
+    const { id, name, role } = dataValues;
+
+    const verified = await bcrypt.compare(password, dataValues.password);
 
     // if (!verified) throw new ValidateError(401, 'Incorrect email or password');
 
-    const token = setToken({ email, password });
+    const token = setToken({ id, name, role });
 
     return { token };
   },
