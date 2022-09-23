@@ -15,7 +15,7 @@ const schema = Joi.object({
 const loginService = {
   async login(body) {
     const { error } = schema.validate(body);
-    if (error) throw new ValidateError(400, error.message);
+    if (error) throw ValidateError(400, error.message);
 
     const { email, password } = body;
 
@@ -23,7 +23,7 @@ const loginService = {
       where: { email }, raw: true,
     });
 
-    if (!dataValues) throw new ValidateError(401, 'Incorrect email or password');
+    if (!dataValues) throw ValidateError(401, 'Incorrect email or password');
 
     const { id, name, role } = dataValues;
 
@@ -33,7 +33,7 @@ const loginService = {
 
     const token = setToken({ id, name, role });
 
-    return { token };
+    return { token, role };
   },
 };
 
