@@ -9,6 +9,7 @@ function App() {
     <BrowserRouter basename={ process.env.PUBLIC_URL }>
       <main className="main">
         <Routes>
+          <Route path="/" element={ <LoginForm /> } />
           <Route path="/login" element={ <LoginForm /> } />
           <Route path="/register" element={ <RegisterForm /> } />
           <Route path="/seller/orders" element={ <RegisterForm /> } />
