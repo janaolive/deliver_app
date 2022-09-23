@@ -25,7 +25,7 @@ const loginService = {
 
     if (!dataValues) throw new ValidateError(401, 'Incorrect email or password');
 
-    const { id, name, role } = dataValues
+    const { id, name, role } = dataValues;
 
     const verified = await bcrypt.compare(password, dataValues.password);
 
