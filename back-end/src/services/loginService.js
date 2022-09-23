@@ -29,11 +29,11 @@ const loginService = {
 
     const verified = await bcrypt.compare(password, dataValues.password);
 
-    // if (!verified) throw new ValidateError(401, 'Incorrect email or password');
+    if (!verified) throw new ValidateError(401, 'Incorrect email or password');
 
     const token = setToken({ id, name, role });
 
-    return { token };
+    return { token, role };
   },
 };
 
