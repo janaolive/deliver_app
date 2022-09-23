@@ -1,16 +1,15 @@
-const Joi = require("joi");
-const md5 = require("md5");
-const models = require("../database/models");
-const ValidateError = require("../middlewares/ValidateError");
-const { setToken } = require("../middlewares/tokenMiddleware");
+const Joi = require('joi');
+const md5 = require('md5');
+const models = require('../database/models');
+const ValidateError = require('../middlewares/ValidateError');
 
 const schema = Joi.object({
   name: Joi.string().required().min(12),
   email: Joi.string().required().email(),
   password: Joi.string().required().min(6),
 }).messages({
-  "string.empty": "All fields must be filled",
-  "any.required": "All fields must be filled",
+  'string.empty': 'All fields must be filled',
+  'any.required': 'All fields must be filled',
 });
 
 const registerService = {
@@ -23,14 +22,14 @@ const registerService = {
     const dataValues = await models.User.findOne({
       where: { name, email },
     });
-    console.log("dataValues");
-    if (dataValues) throw ValidateError(401, "User already exists");
+    console.log('dataValues');
+    if (dataValues) throw ValidateError(401, 'User already exists');
 
     const createHash = md5(password);
 
     // if (!createHash) throw ValidateError(401, 'Incorrect name, email or password');
 
-    const newUser = { name, email, password: createHash};
+    const newUser = { name, email, password: createHash };
     const createUser = await models.User.create(newUser);
     return createUser;
   },
