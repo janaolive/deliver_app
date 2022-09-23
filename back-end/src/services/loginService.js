@@ -28,7 +28,9 @@ const loginService = {
     const { id, name, role } = dataValues;
 
     const hashVerify = md5(password);
-    if (dataValues.password !== hashVerify) throw new ValidateError(401, 'Incorrect email or password');
+    if (dataValues.password !== hashVerify) {
+      throw new ValidateError(401, 'Incorrect email or password');
+    }
 
     const token = setToken({ id, name, role });
 
