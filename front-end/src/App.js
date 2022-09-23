@@ -10,7 +10,7 @@ function App() {
       <main className="main">
         <Routes>
           <Route exact path="/login" element={ <LoginForm /> } />
-          <Route path="/register" element={ <RegisterForm /> } />
+          <Route exact path="/register" element={ <RegisterForm /> } />
           <Route path="/seller/orders" element={ <RegisterForm /> } />
           <Route path="/customer/products" element={ <RegisterForm /> } />
           <Route path="/admin/manages" element={ <RegisterForm /> } />

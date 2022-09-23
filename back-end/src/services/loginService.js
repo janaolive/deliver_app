@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const bcrypt = require('bcrypt');
+const md5 = require('md5');
 const db = require('../database/models');
 const ValidateError = require('../middlewares/ValidateError');
 const { setToken } = require('../middlewares/tokenMiddleware');
@@ -15,7 +15,7 @@ const schema = Joi.object({
 const loginService = {
   async login(body) {
     const { error } = schema.validate(body);
-    if (error) throw ValidateError(400, error.message);
+    if (error) throw new ValidateError(400, error.message);
 
     const { email, password } = body;
 
@@ -23,13 +23,12 @@ const loginService = {
       where: { email }, raw: true,
     });
 
-    if (!dataValues) throw ValidateError(404, 'Incorrect email or password');
+    if (!dataValues) throw new ValidateError(404, 'Incorrect email or password');
 
     const { id, name, role } = dataValues;
 
-    const verified = await bcrypt.compare(password, dataValues.password);
-
-    if (!verified) throw new ValidateError(401, 'Incorrect email or password');
+    const hashVerify = md5(password);
+    if (dataValues.password !== hashVerify) throw new ValidateError(401, 'Incorrect email or password');
 
     const token = setToken({ id, name, role });
 

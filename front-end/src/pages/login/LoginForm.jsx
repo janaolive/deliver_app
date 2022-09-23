@@ -11,6 +11,14 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [showError, setError] = useState(false);
 
+  const aviso = (
+    <Alert
+      data-testid="common_login__element-invalid-email"
+      color="danger"
+    >
+      Usuário não encontrado!
+    </Alert>);
+
   const redirect = useNavigate();
   async function redirectUser(user) {
     switch (user.role) {
@@ -91,7 +99,7 @@ export default function LoginForm() {
           </Button>
         </Form>
       </Container>
-      { showError ? <Alert color="danger">Usuário não encontrado!</Alert> : null }
+      { showError ? aviso : null }
     </main>
   );
 }

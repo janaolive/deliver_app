@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use('/login', loginRouter);
+app.use('/', loginRouter);
 app.use('/register', registerRouter);
 app.get('/coffee', (_req, res) => res.status(418).end());
 
