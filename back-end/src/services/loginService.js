@@ -1,6 +1,6 @@
 const Joi = require('joi');
-/* const bcrypt = require('bcrypt'); */
-const models = require('../database/models');
+const bcrypt = require('bcrypt');
+const db = require('../database/models');
 const ValidateError = require('../middlewares/ValidateError');
 const { setToken } = require('../middlewares/tokenMiddleware');
 
@@ -15,23 +15,25 @@ const schema = Joi.object({
 const loginService = {
   async login(body) {
     const { error } = schema.validate(body);
-    if (error) throw new ValidateError(400, error.message);
+    if (error) throw ValidateError(400, error.message);
 
     const { email, password } = body;
 
-    const dataValues = await models.User.findOne({
-      where: { email },
+    const dataValues = await db.User.findOne({
+      where: { email }, raw: true,
     });
 
-    if (!dataValues) throw  ValidateError(401, 'Incorrect email or password');
+    if (!dataValues) throw ValidateError(401, 'Incorrect email or password');
 
-    /* const verified = await bcrypt.compare(password, dataValues.password);
+    const { id, name, role } = dataValues;
 
-    if (!verified) throw ValidateError(401, 'Incorrect email or password'); */
+    const verified = await bcrypt.compare(password, dataValues.password);
 
-    const token = setToken({ email, password });
+    if (!verified) throw new ValidateError(401, 'Incorrect email or password');
 
-    return { token, role: dataValues.role  };
+    const token = setToken({ id, name, role });
+
+    return { token, role };
   },
 };
 

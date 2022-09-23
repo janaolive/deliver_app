@@ -55,7 +55,6 @@
     }
   },
   "dependencies": {
-    "bcrypt": "^5.0.1",
-    "sweetalert": "^2.1.2"
+    "bcrypt": "^5.0.1"
   }
 }
