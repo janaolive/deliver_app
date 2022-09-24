@@ -5,7 +5,7 @@ const registerController = {
     try {
       const response = await registerService.register(req.body);
 
-      return res.status(200).json(response);
+      return res.status(201).json(response);
     } catch (error) {
       return error.status
         ? res.status(error.status).json({ message: error.message })
