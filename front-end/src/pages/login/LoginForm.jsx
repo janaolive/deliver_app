@@ -11,7 +11,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [showError, setError] = useState(false);
 
-  const aviso = (
+  const warning = (
     <Alert
       data-testid="common_login__element-invalid-email"
       color="danger"
@@ -99,7 +99,7 @@ export default function LoginForm() {
           </Button>
         </Form>
       </Container>
-      { showError ? aviso : null }
+      { showError ? warning : null }
     </main>
   );
 }

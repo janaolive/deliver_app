@@ -1,6 +1,9 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, FormGroup, Input, Label, Button, Alert, Container } from 'reactstrap';
-import { validateLogin } from '../../services/validateLogin';
+import UserContext from '../../context/user/context';
+import api from '../../services/Api';
+import validateFields from '../../services/validateLogin';
 
 function RegisterForm() {
   const { setUser } = useContext(UserContext);
@@ -21,6 +24,13 @@ function RegisterForm() {
       setError(true);
     }
   };
+  const warning = (
+    <Alert
+      data-testid="common_register__element-invalid_register"
+      color="danger"
+    >
+      User already exists
+    </Alert>);
   return (
     <main>
       <h1>Cadastro</h1>
@@ -64,15 +74,16 @@ function RegisterForm() {
           </FormGroup>
           <Button
             color="success"
-            onClick={ handleSubmit }
             data-testid="common_register__button-register"
-            disabled={ validateLogin(email, password) }
+            disabled={ validateFields(name, email, password) }
+            onClick={ handleSubmit }
+            type="button"
           >
             Cadastrar
           </Button>
         </Form>
       </Container>
-      { showError ? <Alert color="danger">This </Alert> : null }
+      { showError ? warning : null }
     </main>
   );
 }
