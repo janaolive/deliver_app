@@ -54,10 +54,6 @@
   margin: 5px;
 }
 
-.row {
-  padding: 15px;
-}
-
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
