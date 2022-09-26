@@ -18,6 +18,41 @@
   font-weight: 900;
 }
 
+
+.loginMain {
+  align-content: center;
+  margin: 0 auto;
+  max-width: 500px;
+}
+
+.titleDiv {
+  align-content: space-around;
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+}
+
+
+.logoBeer {
+  max-width: 100px;
+}
+
+.title {
+  text-align: center;
+}
+
+.container {
+  padding: 20px;
+}
+
+.col {
+  margin: 5px;
+}
+
+.row {
+  padding: 15px;
+}
+
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;

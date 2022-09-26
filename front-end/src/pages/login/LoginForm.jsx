@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Form, FormGroup, Input, Label, Button, Alert, Container } from 'reactstrap';
 import UserContext from '../../context/user/context';
 import api from '../../services/Api';
+import logo from '../../images/logo_temporaria.png';
 import { validateLogin } from '../../services/validateLogin';
 
 export default function LoginForm() {
@@ -47,12 +48,14 @@ export default function LoginForm() {
   };
 
   return (
-    <main>
-      <div>
-        logo
-        <h1>Nome do app</h1>
+    <main
+      className="loginMain row col-xs-12 col-sm-12 col-md-12 col-lg-12"
+    >
+      <div className="titleDiv">
+        <img className="logoBeer" src={ logo } alt="logo do app" />
+        <h1 className="title">Grupo 11</h1>
       </div>
-      <Container className="bg-light border">
+      <Container className="container text-center  bg-light border">
         <Form>
           <FormGroup>
             <Label for="common_login__input-email">
@@ -80,23 +83,27 @@ export default function LoginForm() {
               type="password"
             />
           </FormGroup>
-          <Button
-            color="success"
-            data-testid="common_login__button-login"
-            disabled={ validateLogin(email, password) }
-            onClick={ handleSubmit }
-            type="button"
-          >
-            Login
-          </Button>
-          <Button
-            outline
-            color="success"
-            data-testid="common_login__button-register"
-            onClick={ () => { redirect('/register'); } }
-          >
-            Ainda não tenho conta
-          </Button>
+          <div className="row">
+            <Button
+              className="col align-self-start"
+              color="success"
+              data-testid="common_login__button-login"
+              disabled={ validateLogin(email, password) }
+              onClick={ handleSubmit }
+              type="button"
+            >
+              Login
+            </Button>
+            <Button
+              outline
+              className="col align-self-center"
+              color="success"
+              data-testid="common_login__button-register"
+              onClick={ () => { redirect('/register'); } }
+            >
+              Ainda não tenho conta
+            </Button>
+          </div>
         </Form>
       </Container>
       { showError ? warning : null }

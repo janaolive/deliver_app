@@ -32,9 +32,11 @@ function RegisterForm() {
       User already exists
     </Alert>);
   return (
-    <main>
+    <main
+      className="loginMain row col-xs-12 col-sm-12 col-md-12 col-lg-12"
+    >
       <h1>Cadastro</h1>
-      <Container className="bg-light border">
+      <Container className="container text-center bg-light border">
         <Form>
           <FormGroup>
             <Label for="common_register__input-name">
@@ -72,15 +74,17 @@ function RegisterForm() {
               type="password"
             />
           </FormGroup>
-          <Button
-            color="success"
-            data-testid="common_register__button-register"
-            disabled={ validateFields(name, email, password) }
-            onClick={ handleSubmit }
-            type="button"
-          >
-            Cadastrar
-          </Button>
+          <div className="row">
+            <Button
+              color="success"
+              data-testid="common_register__button-register"
+              disabled={ validateFields(name, email, password) }
+              onClick={ handleSubmit }
+              type="button"
+            >
+              Cadastrar
+            </Button>
+          </div>
         </Form>
       </Container>
       { showError ? warning : null }
