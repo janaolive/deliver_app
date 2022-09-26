@@ -15,15 +15,16 @@ const schema = Joi.object({
 const registerService = {
   async register(body) {
     const { error } = schema.validate(body);
-    if (error) throw ValidateError(400, error.message);
+    if (error) throw new ValidateError(400, error.message);
 
     const { name, email, password } = body;
+    console.log(body);
 
     const dataValues = await models.User.findOne({
       where: { name, email },
     });
     console.log('dataValues');
-    if (dataValues) throw ValidateError(401, 'User already exists');
+    if (dataValues) throw new ValidateError(409, 'User already exists');
 
     const createHash = md5(password);
 
