@@ -14,10 +14,11 @@ export default function LoginForm() {
 
   const warning = (
     <Alert
+      className="alert"
       data-testid="common_login__element-invalid-email"
       color="danger"
     >
-      Usuário não encontrado!
+      Usuário ou senha incorretos!
     </Alert>);
 
   const redirect = useNavigate();
@@ -29,7 +30,7 @@ export default function LoginForm() {
     case 'seller':
       redirect('/seller/orders');
       break;
-    case 'admin':
+    case 'administrator':
       redirect('/admin/manage');
       break;
     default:

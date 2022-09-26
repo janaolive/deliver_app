@@ -26,16 +26,19 @@ function RegisterForm() {
   };
   const warning = (
     <Alert
+      className="alert"
       data-testid="common_register__element-invalid_register"
       color="danger"
     >
-      User already exists
+      Usuario já existe
     </Alert>);
   return (
     <main
       className="loginMain row col-xs-12 col-sm-12 col-md-12 col-lg-12"
     >
-      <h1>Cadastro</h1>
+      <div className="titleDiv">
+        <h1 className="title">Cadastre-se</h1>
+      </div>
       <Container className="container text-center bg-light border">
         <Form>
           <FormGroup>
