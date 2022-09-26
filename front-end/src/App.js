@@ -4,6 +4,7 @@ import './App.css';
 import LoginForm from './pages/login/LoginForm';
 import RegisterForm from './pages/registro/RegisterForm';
 import NotFoud from './pages/notFound';
+import Checkout from './pages/checkout/Checkout';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route exact path="/register" element={ <RegisterForm /> } />
           <Route exact path="/seller/orders" element={ <NotFoud /> } />
           <Route exact path="/customer/products" element={ <NotFoud /> } />
+          <Route exact path="/customer/checkout" element={ <Checkout /> } />
           <Route exact path="/admin/manage" element={ <NotFoud /> } />
           <Route exact path="/" element={ <Navigate to="/login" /> } />
         </Routes>
