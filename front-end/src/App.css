@@ -54,6 +54,23 @@
   margin: 5px;
 }
 
+.cardGroup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bodyCard {
+  display: flex;
+  flex-flow: column;
+  flex-wrap: nowrap;
+}
+
+.cardButton {
+  display: flex;
+  flex-direction: row;
+}
+
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
