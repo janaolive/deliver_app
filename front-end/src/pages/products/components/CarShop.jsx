@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react';
 
 export default function CarShop() {
-  const [total, setTotal] = useState(0);
   const productsStorage = localStorage.getItem('products');
+  const total = localStorage.setItem('total', 0);
   const [products, setProducts] = useState(productsStorage);
 
   const sum = (productsObj) => {
     const productsValues = Object.values(JSON.parse(productsObj));
-    console.log('bla bla', productsValues);
+    productsValues.forEach((product) => {
+      const { price, quantity } = product;
+      const value = quantity * price;
+      console.log(value);
+    });
   };
+
   useEffect(() => {
     sum(products);
   }, [products]);

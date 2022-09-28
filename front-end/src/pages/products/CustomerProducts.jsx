@@ -13,39 +13,46 @@ export default function CustomProducts() {
   const validadeButton = (target, prod) => {
     const { name } = target;
     const { id, price } = prod;
+    const nome = prod.name;
     const product = JSON.parse(localStorage.getItem('products'));
-    console.log(product[prod.name].quantity);
     let productQnt = product[prod.name].quantity;
     switch (name) {
     case 'mais':
       (productQnt) += 1;
       localStorage.setItem('products', JSON.stringify({ ...product,
         [prod.name]: {
+          name: nome,
           id,
           price,
           quantity: productQnt,
+          subTotal: 0,
         } }));
       setValue({ ...product,
         [prod.name]: {
+          name: nome,
           id,
           price,
           quantity: productQnt,
+          subTotal: 0,
         } });
       break;
     case 'menos':
       if (productQnt > 0) {
-        console.log(prod.name);
         localStorage.setItem('products', JSON.stringify({ ...product,
           [prod.name]: {
+            name: nome,
             id,
             price,
             quantity: productQnt - 1,
+            subTotal: 0,
           } }));
         setValue({ ...product,
           [prod.name]: {
+            name: nome,
             id,
             price,
             quantity: productQnt - 1,
+            subTotal: 0,
           } });
       }
       break;
@@ -134,17 +141,17 @@ export default function CustomProducts() {
   const handleFetch = async () => {
     try {
       const product = await api.get('/customer/products');
-      console.log(product);
       setProducts(product.data);
       const nameMap = product.data.map(({ name, id, price }) => ({ name, id, price }))
         .reduce((acc, curr) => {
-          /*  console.log('acc', acc);
+          /* console.log('acc', acc);
           console.log('curr', curr); */
           acc[curr.name] = {
             name: curr.name,
             id: curr.id,
             price: curr.price,
             quantity: 0,
+            subTotal: 0,
           };
           return acc;
         }, {});
