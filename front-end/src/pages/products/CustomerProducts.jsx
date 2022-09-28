@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardBody, CardTitle, CardText, Button, Input } from 'reactstrap';
 
 import api from '../../services/Api';
+import CarShop from './components/CarShop';
 import NavBar from './components/NavBar';
 
 export default function CustomProducts() {
@@ -9,42 +10,72 @@ export default function CustomProducts() {
   const [showError, setError] = useState(false);
   const [valueState, setValue] = useState({});
 
-  const validadeButton = (target) => {
-    const { name, id } = target;
+  const validadeButton = (target, prod) => {
+    const { name } = target;
+    const { id, price } = prod;
     const product = JSON.parse(localStorage.getItem('products'));
-    let productQnt = product[id];
+    console.log(product[prod.name].quantity);
+    let productQnt = product[prod.name].quantity;
     switch (name) {
     case 'mais':
-      productQnt += 1;
-      localStorage.setItem('products', JSON.stringify({ ...product, [id]: productQnt }));
-      setValue({ ...product, [id]: productQnt });
+      (productQnt) += 1;
+      localStorage.setItem('products', JSON.stringify({ ...product,
+        [prod.name]: {
+          id,
+          price,
+          quantity: productQnt,
+        } }));
+      setValue({ ...product,
+        [prod.name]: {
+          id,
+          price,
+          quantity: productQnt,
+        } });
       break;
     case 'menos':
       if (productQnt > 0) {
-        localStorage
-          .setItem('products', JSON.stringify({ ...product, [id]: productQnt - 1 }));
-        setValue({ ...product, [id]: productQnt - 1 });
+        console.log(prod.name);
+        localStorage.setItem('products', JSON.stringify({ ...product,
+          [prod.name]: {
+            id,
+            price,
+            quantity: productQnt - 1,
+          } }));
+        setValue({ ...product,
+          [prod.name]: {
+            id,
+            price,
+            quantity: productQnt - 1,
+          } });
       }
       break;
     default:
     }
   };
 
+  const inputOnFocus = (target) => {
+    target.value = '';
+  };
+
+  const inputOnBlur = (target) => {
+    target.value = valueState[target.id];
+  };
+
   const inputHandle = (target) => {
     const { value, id } = target;
     setValue({
       ...valueState,
-      [id]: value,
+      [id]: Number(value),
     });
     const product = JSON.parse(localStorage.getItem('products'));
     localStorage.setItem('products', JSON.stringify({ ...product, [id]: value }));
   };
 
   function makeProducts(product, index) {
-    const id = index + 1;
+    const { id } = product;
     return (
       <Card
-        key={ product.id }
+        key={ index }
         style={ {
           width: '18rem',
         } }
@@ -53,7 +84,7 @@ export default function CustomProducts() {
           alt={ product.name }
           src={ product.urlImage }
           className="img-fluid img-thumbnail"
-          data-testid={ `customer_products__element-bg-image-${id}` }
+          data-testid={ `customer_products__img-card-bg-image-${id}` }
         />
         <CardBody className="bodyCard">
           <CardTitle
@@ -65,33 +96,32 @@ export default function CustomProducts() {
           <CardText
             data-testid={ `customer_products__element-card-price-${id}` }
           >
-            R$
-            { product.price }
+            { product.price.replace('.', ',') }
           </CardText>
           <div className="cardButton">
             <Button
               color="success"
               name="menos"
-              id={ product.name }
-              data-testid={ `customer_products__element-add-item-${id}` }
-              onClick={ (e) => validadeButton(e.target) }
+              data-testid={ `customer_products__button-card-add-item-${id}` }
+              onClick={ (e) => validadeButton(e.target, product) }
             >
               -
             </Button>
             <Input
-              type="number"
-              data-testid={ `customer_products__element-quantity-${id}` }
+              type="text"
+              data-testid={ `customer_products__input-card-quantity-${id}` }
               placeholder="0"
-              value={ valueState[product.name] || '' }
-              id={ product.name }
+              value={ valueState[product.name] ? valueState[product.name].quantity : 0 }
               onChange={ (e) => inputHandle(e.target) }
+              onFocus={ (e) => inputOnFocus(e.target) }
+              onBlur={ (e) => inputOnBlur(e.target) }
             />
             <Button
               color="success"
               name="mais"
               id={ product.name }
-              onClick={ (e) => validadeButton(e.target) }
-              data-testid={ `customer_products__element-rm-item-${id}` }
+              onClick={ (e) => validadeButton(e.target, product) }
+              data-testid={ `customer_products__button-card-rm-item-${id}` }
             >
               +
             </Button>
@@ -106,9 +136,16 @@ export default function CustomProducts() {
       const product = await api.get('/customer/products');
       console.log(product);
       setProducts(product.data);
-      const nameMap = product.data.map((produto) => produto.name)
+      const nameMap = product.data.map(({ name, id, price }) => ({ name, id, price }))
         .reduce((acc, curr) => {
-          acc[curr] = 0;
+          /*  console.log('acc', acc);
+          console.log('curr', curr); */
+          acc[curr.name] = {
+            name: curr.name,
+            id: curr.id,
+            price: curr.price,
+            quantity: 0,
+          };
           return acc;
         }, {});
       setValue(nameMap);
@@ -131,6 +168,7 @@ export default function CustomProducts() {
           ? null
           : products.map((product, index) => makeProducts(product, index)) }
       </div>
+      <CarShop />
     </main>
   );
 }

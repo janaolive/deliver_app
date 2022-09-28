@@ -41,6 +41,7 @@ export default function LoginForm() {
     try {
       const login = await api.post('/login', { email, password });
       setUser(login);
+      console.log(login.data);
       localStorage.setItem('user', JSON.stringify(login.data));
       await redirectUser(login.data);
     } catch (error) {

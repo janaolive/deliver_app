@@ -33,8 +33,9 @@ const loginService = {
     }
 
     const token = setToken({ id, name, role });
+    console.log(token);
 
-    return { nome: name, email, role, token };
+    return { name, email, role, token };
   },
 };
 

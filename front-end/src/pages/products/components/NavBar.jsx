@@ -41,7 +41,7 @@ export default function NavBar() {
           <NavbarText
             data-testid="customer_products__element-navbar-user-full-name"
           >
-            { user.nome }
+            { user.name }
           </NavbarText>
           <NavItem>
             <NavLink
