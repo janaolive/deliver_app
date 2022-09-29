@@ -15,5 +15,4 @@ app.use('/register', registerRouter);
 app.use('/customer', customerRouter);
 app.get('/coffee', (_req, res) => res.status(418).end());
 
-
 module.exports = app;

@@ -1,16 +1,16 @@
-const jwt = require("jsonwebtoken");
-const ValidateError = require("./ValidateError");
+const jwt = require('jsonwebtoken');
+const ValidateError = require('./ValidateError');
 require('dotenv').config();
 
 const secret = process.env.JWT_SECRET || '123456';
 
 const auth = (token) => {
-  if (!token) throw new ValidateError(401, "Token not found");
+  if (!token) throw new ValidateError(401, 'Token not found');
   try {
     const data = jwt.verify(token, secret);
     return data;
   } catch (error) {
-    throw new ValidateError(401, "Token must be a valid token");
+    throw new ValidateError(401, 'Token must be a valid token');
   }
 };
 

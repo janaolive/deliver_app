@@ -1,4 +1,4 @@
-const models = require("../database/models");
+const models = require('../database/models');
 
 const customerService = {
   async findAll() {
@@ -10,7 +10,7 @@ const customerService = {
     const { products, ...sale } = data;
     const saleId = await models.Sale.create(
       { ...sale, saleDate: new Date() },
-      { raw: true }
+      { raw: true },
     );
     await Promise.all(
       products.map((product) =>
@@ -18,8 +18,7 @@ const customerService = {
           saleId: saleId.id,
           productId: product.id,
           quantity: product.quantity,
-        })
-      )
+        })),
     );
     return saleId;
   },
