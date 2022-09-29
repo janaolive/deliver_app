@@ -1,30 +1,30 @@
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Button } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function CarShop() {
-  const productsStorage = localStorage.getItem('products');
-  const total = localStorage.setItem('total', 0);
-  const [products, setProducts] = useState(productsStorage);
-
-  const sum = (productsObj) => {
-    const productsValues = Object.values(JSON.parse(productsObj));
-    productsValues.forEach((product) => {
-      const { price, quantity } = product;
-      const value = quantity * price;
-      console.log(value);
-    });
+  const [disable, setDisabled] = useState(true);
+  const total = localStorage.getItem('total');
+  const redirect = useNavigate();
+  const handleClick = async () => redirect('/customer/checkout');
+  const handleButton = (value) => {
+    if (value > 0) setDisabled(false);
+    if (value === 0) setDisabled(true);
   };
 
   useEffect(() => {
-    sum(products);
-  }, [products]);
-
-  useEffect(() => {
-    setProducts(productsStorage);
-  }, [productsStorage]);
-
+    handleButton(Number(total));
+  }, [total]);
+  const totalValue = total.replace('.', ',');
   return (
-    <div>
-      { total }
-    </div>
+    <Button
+      type="button"
+      color="success"
+      data-testid="customer_products__checkout-bottom-value"
+      disabled={ disable }
+      onClick={ handleClick }
+    >
+      { totalValue }
+    </Button>
   );
 }

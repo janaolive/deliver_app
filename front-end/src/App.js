@@ -16,6 +16,7 @@ function App() {
           <Route exact path="/register" element={ <RegisterForm /> } />
           <Route exact path="/seller/orders" element={ <NotFoud /> } />
           <Route exact path="/customer/products" element={ <CustomProducts /> } />
+          <Route exact path="/customer/checkout" element={ <NotFoud /> } />
           <Route exact path="/customer/orders" element={ <CustomOrders /> } />
           <Route exact path="/admin/manage" element={ <NotFoud /> } />
           <Route exact path="/" element={ <Navigate to="/login" /> } />
