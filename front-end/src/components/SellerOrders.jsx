@@ -1,3 +1,5 @@
+// a tela de seller_orders receberá os pedidos agrupados por id e renderizará cada pedido na tela. Ao clicar no pedido, o usuário será redirecionado para a tela de detalhes do pedido
+
 const { useState } = require('react');
 
 export default function SellerOrderDetails() {
