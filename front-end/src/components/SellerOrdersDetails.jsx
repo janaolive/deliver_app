@@ -34,39 +34,49 @@ export default function SellerOrderDetails() {
         </button>
       </div>
       <table>
-        <tr>
-          <th>Item</th>
-          <th>Descrição</th>
-          <th>Quantidade</th>
-          <th>Valor Unitário</th>
-          <th>Sub-Total</th>
-        </tr>
-        <td
-          data-testid={ `seller_order_details__element-order-table-item-number-${index}` }
-        >
-          {index || '1'}
-        </td>
-        <td
-          data-testid={ `seller_order_details__element-order-table-name-${index}` }
-        >
-          {name || 'Skol Lata 250ml'}
-        </td>
-        <td
-          data-testid={ `seller_order_details__element-order-table-quantity-${index}` }
-        >
-          {quantity || '4'}
-        </td>
-        <td
-          data-testid={ `seller_order_details__element-order-table-unit-price-${index}` }
-        >
-          {price || 'R$2,20'}
-        </td>
-        <td
-          data-testid={ `seller_order_details__element-order-table-sub-total-${index}` }
-        >
-          R$
-          {price || '8,80'}
-        </td>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Valor Unitário</th>
+            <th>Sub-Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td
+              data-testid={ `seller_order_details__element-order-table-item-number-
+            ${index}` }
+            >
+              {index || '1'}
+            </td>
+            <td
+              data-testid={ `seller_order_details__element-order-table-name-${index}` }
+            >
+              {name || 'Skol Lata 250ml'}
+            </td>
+            <td
+              data-testid={ `seller_order_details__element-order-table-quantity-
+              ${index}` }
+            >
+              {quantity || '4'}
+            </td>
+            <td
+              data-testid={ `seller_order_details__element-order-table-unit-price-
+            ${index}` }
+            >
+              {price || 'R$2,20'}
+            </td>
+            <td
+              data-testid={ `seller_order_details__element-order-table-sub-total-
+              ${index}` }
+            >
+              R$
+              {price || '8,80'}
+            </td>
+          </tr>
+        </tbody>
       </table>
       <footer>
         <h2 data-testid="seller_order_details__element-order-total-price">
