@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardBody, CardTitle, CardText, Button, Input } from 'reactstrap';
+/* import { Card, CardBody, CardTitle, CardText, Button, Input } from 'reactstrap'; */
 
 import api from '../../services/Api';
 import CarShop from './components/CarShop';
@@ -30,6 +30,7 @@ export default function CustomProducts() {
         [name]:
           { name, id, price, quantity: productQnt, subTotal: sub,
           } }));
+      console.log(id);
       break;
     case 'menos':
       if (productQnt > 0) {
@@ -76,7 +77,7 @@ export default function CustomProducts() {
   function makeProducts(product, index) {
     const { name, id, urlImage, price } = product;
     return (
-      <Card
+      <div
         key={ index }
         style={ {
           width: '18rem',
@@ -88,28 +89,29 @@ export default function CustomProducts() {
           className="img-fluid img-thumbnail"
           data-testid={ `customer_products__img-card-bg-image-${id}` }
         />
-        <CardBody className="bodyCard">
-          <CardTitle
+        <div className="bodyCard">
+          <div
             tag="h5"
             data-testid={ `customer_products__element-card-title-${id}` }
           >
             { name }
-          </CardTitle>
-          <CardText
+          </div>
+          <div
             data-testid={ `customer_products__element-card-price-${id}` }
           >
             { price.replace('.', ',') }
-          </CardText>
+          </div>
           <div className="cardButton">
-            <Button
+            <button
               color="success"
+              type="button"
               name="menos"
               data-testid={ `customer_products__button-card-rm-item-${id}` }
               onClick={ (e) => validadeButton(e.target, product) }
             >
               -
-            </Button>
-            <Input
+            </button>
+            <input
               type="text"
               data-testid={ `customer_products__input-card-quantity-${id}` }
               placeholder="0"
@@ -118,18 +120,19 @@ export default function CustomProducts() {
               onFocus={ (e) => inputOnFocus(e.target) }
               onBlur={ (e) => inputOnBlur(e.target, product) }
             />
-            <Button
+            <button
               color="success"
+              type="button"
               name="mais"
               id={ name }
               onClick={ (e) => validadeButton(e.target, product) }
               data-testid={ `customer_products__button-card-add-item-${id}` }
             >
               +
-            </Button>
+            </button>
           </div>
-        </CardBody>
-      </Card>
+        </div>
+      </div>
     );
   }
 
@@ -166,7 +169,7 @@ export default function CustomProducts() {
   return (
     <main>
       <NavBar />
-      <CarShop prop={ total } />
+      { total ? <CarShop prop={ total } /> : null }
       <div className="cardGroup">
         { showError
           ? null
