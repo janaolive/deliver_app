@@ -1,14 +1,8 @@
 const jwt = require("jsonwebtoken");
 const ValidateError = require("./ValidateError");
-// require('dotenv').config();
-const path = require("path");
-const fs = require("fs");
-const secret = fs.readFileSync(
-  path.join(__dirname, "..", "..", "jwt.evaluation.key"),
-  { encoding: "utf-8" }
-);
+require('dotenv').config();
 
-// const secret = process.env.JWT_SECRET || '123456';
+const secret = process.env.JWT_SECRET || '123456';
 
 const auth = (token) => {
   if (!token) throw new ValidateError(401, "Token not found");

@@ -5,6 +5,4 @@ const registerRouter = Router();
 
 registerRouter.post('/', registerController.register);
 
-// comentário para push
-
 module.exports = registerRouter;

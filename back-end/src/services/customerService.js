@@ -1,6 +1,11 @@
 const models = require("../database/models");
 
 const customerService = {
+  async findAll() {
+    const result = await models.Product.findAll({ raw: true });
+    return result;
+  },
+
   async customer(data) {
     const { products, ...sale } = data;
     const saleId = await models.Sale.create(
