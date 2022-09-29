@@ -3,74 +3,102 @@ const { useState } = require('react');
 export default function SellerOrderDetails() {
   const [order] = useState(0);
 
+  // Passar o id por params depois de implementar o backend
   const id = 1;
-  const { orderStatus, orderDate } = order;
+  // receber "order" do backend e renderizar no frontend via map
+  const { orderStatus, orderDate, orderPrice, orderAdress } = order;
 
   return (
-    <section>
-      <h2>Detalhe do Pedido</h2>
+    <main>
       <div>
-        <h3
-          data-testid={
-            `seller_order_details__element-order-details-label-order-${id}`
-          }
-        >
-          <strong>PEDIDO</strong>
-        </h3>
-        <h3 data-testid="seller_order_details__element-order-details-label-order-date">
-          <strong>{orderDate || 'Data'}</strong>
-        </h3>
-        <h3
-          data-testid="seller_order_details__element-order-details-label-delivery-status"
-        >
-          <strong>{orderStatus || 'PENDENTE'}</strong>
-        </h3>
-        <h3 data-testid="seller_order_details__button-preparing-check">
-          PREPARAR PEDIDO
-        </h3>
-        <h3 data-testid="seller_order_details__button-dispatch-check">
-          SAIU PARA ENTREGA
-        </h3>
+        <div>
+          <h4
+            data-testid={
+              `seller_order_details__element-order-details-label-order-${id}`
+            }
+          >
+            Pedido 000
+            {id}
+          </h4>
+        </div>
+        <div>
+          <h4
+            data-testid={ `seller_orders__element-delivery-status-${id}` }
+          >
+            <strong>{orderStatus || 'PENDENTE'}</strong>
+          </h4>
+        </div>
+        <span data-testid={ `seller_orders__element-order-date-${id}` }>
+          {orderDate || '08/04/21'}
+        </span>
+        <span data-testid={ `seller_orders__element-card-price-${id}` }>
+          { orderPrice || 'R$23,80'}
+        </span>
+        <span data-testid={ `seller_orders__element-card-address-${id}` }>
+          { orderAdress || 'Rua Irmãos Monteiro, Bairro Pedras, 851' }
+        </span>
+        <div />
       </div>
+
       <div>
-        <h4>Item</h4>
-        <h4>Descrição</h4>
-        <h4>Quantidade</h4>
-        <h4>Valor Unitário</h4>
-        <h4>Sub-Total</h4>
+        <div>
+          <h4
+            data-testid={
+              `seller_order_details__element-order-details-label-order-${id}`
+            }
+          >
+            Pedido 000
+            {id + 1 }
+          </h4>
+        </div>
+        <div>
+          <h4
+            data-testid={ `seller_orders__element-delivery-status-${id + 1}` }
+          >
+            <strong>{orderStatus || 'PREPARANDO'}</strong>
+          </h4>
+        </div>
+        <span data-testid={ `seller_orders__element-order-date-${id + 1}` }>
+          {orderDate || '08/04/21'}
+        </span>
+        <span data-testid={ `seller_orders__element-card-price-${id + 1}` }>
+          { orderPrice || 'R$14,20'}
+        </span>
+        <span data-testid={ `seller_orders__element-card-address-${id + 1}` }>
+          { orderAdress || 'Rua Vila Bela, Bairro Gurupi, 670' }
+        </span>
+        <div />
       </div>
+
       <div>
-        <span
-          data-testid={ `seller_order_details__element-order-table-item-number-${id}` }
-        >
-          1
+        <div>
+          <h4
+            data-testid={
+              `seller_order_details__element-order-details-label-order-${id + 2}`
+            }
+          >
+            Pedido 000
+            {id + 2}
+          </h4>
+        </div>
+        <div>
+          <h4
+            data-testid={ `seller_orders__element-delivery-status-${id + 2}` }
+          >
+            <strong>{orderStatus || 'ENTREGUE'}</strong>
+          </h4>
+        </div>
+        <span data-testid={ `seller_orders__element-order-date-${id + 2}` }>
+          {orderDate || '07/04/21'}
         </span>
-        <span
-          data-testid={ `seller_order_details__element-order-table-name-${id}` }
-        >
-          Skol Lata 250ml
+        <span data-testid={ `seller_orders__element-card-price-${id + 2}` }>
+          { orderPrice || 'R$28,46'}
         </span>
-        <span
-          data-testid={ `seller_order_details__element-order-table-quantity-${id}` }
-        >
-          4
+        <span data-testid={ `seller_orders__element-card-address-${id + 2}` }>
+          { orderAdress || 'Rua Sessenta e Dois, Bairro Maranguape II, 533' }
         </span>
-        <span
-          data-testid={ `seller_order_details__element-order-table-unit-price-${id}` }
-        >
-          R$2,20
-        </span>
-        <span
-          data-testid={ `seller_order_details__element-order-table-sub-total-${id}` }
-        >
-          R$8,80
-        </span>
+        <div />
       </div>
-      <div>
-        <h2 data-testid="seller_order_details__element-order-total-price">
-          Total: R$23,80
-        </h2>
-      </div>
-    </section>
+    </main>
   );
 }

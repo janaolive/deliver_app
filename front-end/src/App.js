@@ -7,6 +7,8 @@ import NotFound from './pages/notFound';
 import Checkout from './pages/checkout/Checkout';
 import CustomerProducts from './pages/products/CustomerProducts';
 import CustomerOrders from './pages/products/CustomerOrders';
+import SellerOrdersDetailsPage from './pages/sellerOrdersDetails/SellerOrdersDetailsPage';
+import SellerOrdersPage from './pages/sellerOrders/SellerOrdersPage';
 
 function App() {
   return (
@@ -15,11 +17,16 @@ function App() {
         <Routes>
           <Route exact path="/login" element={ <LoginForm /> } />
           <Route exact path="/register" element={ <RegisterForm /> } />
-          <Route exact path="/seller/orders" element={ <NotFound /> } />
           <Route exact path="/customer/products" element={ <CustomerProducts /> } />
           <Route exact path="/customer/checkout" element={ <Checkout /> } />
           <Route exact path="/customer/orders" element={ <CustomerOrders /> } />
           <Route exact path="/admin/manage" element={ <NotFound /> } />
+          <Route
+            exact
+            path="/seller/orders/:id"
+            element={ <SellerOrdersDetailsPage /> }
+          />
+          <Route exact path="/seller/orders" element={ <SellerOrdersPage /> } />
           <Route exact path="/" element={ <Navigate to="/login" /> } />
         </Routes>
       </main>

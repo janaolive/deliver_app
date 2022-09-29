@@ -1,15 +1,18 @@
 export default function Header() {
   return (
-    <header>
-      <a href="/teste" data-testid="element-navbar-link-orders">
+    <nav>
+      {/* não esquecer de implementar rota depois */}
+      <a href="/orders" data-testid="customer_products__element-navbar-link-orders">
         Pedidos
       </a>
-      <a href="/teste" data-testid="element-navbar-user-full-name">
+      {/* não esquecer de implementar rota depois */}
+      <a href="/" data-testid="customer_products__element-navbar-user-full-name">
         Fulana Pereira
       </a>
-      <a href="/teste" data-testid="element-navbar-link-logout">
+      {/* redireciona para login */}
+      <a href="/" data-testid="customer_products__element-navbar-link-logout">
         Sair
       </a>
-    </header>
+    </nav>
   );
 }
