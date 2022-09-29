@@ -1,11 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
+import { Link, useNavigate } from 'react-router-dom';
+/* import {
   NavLink,
   Nav,
   NavItem,
   NavbarText,
-} from 'reactstrap';
+} from 'reactstrap'; */
 
 export default function NavBar() {
   const userJson = localStorage.getItem('user');
@@ -18,43 +18,43 @@ export default function NavBar() {
   };
   return (
     <header className="navi">
-      <Nav className="navbar navbar-expand-lg bg-success">
+      <div className="navbar navbar-expand-lg bg-success">
         <div className="container-fluid">
-          <NavItem>
-            <NavLink
+          <div>
+            <Link
               className="text-dark"
               href="/customer/products"
               data-testid="customer_products__element-navbar-link-products"
             >
               Produtos
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
+            </Link>
+          </div>
+          <div>
+            <Link
               className="text-dark"
               href="/customer/orders"
               data-testid="customer_products__element-navbar-link-orders"
             >
               Meus Pedidos
-            </NavLink>
-          </NavItem>
-          <NavbarText
+            </Link>
+          </div>
+          <div
             data-testid="customer_products__element-navbar-user-full-name"
           >
             { user.name }
-          </NavbarText>
-          <NavItem>
-            <NavLink
+          </div>
+          <div>
+            <Link
               className="text-dark"
               href="/"
               data-testid="customer_products__element-navbar-link-logout"
               onClick={ handleLogOut }
             >
               Sair
-            </NavLink>
-          </NavItem>
+            </Link>
+          </div>
         </div>
-      </Nav>
+      </div>
     </header>
   );
 }
