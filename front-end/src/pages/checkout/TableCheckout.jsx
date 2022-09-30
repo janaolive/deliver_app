@@ -8,12 +8,14 @@ export default function TableCheckout() {
     const arrayProducts = Object.values(productsStorage);
     return arrayProducts;
   };
+  // pega os produtos dos local;
 
   const getTotalStorage = () => {
     const totalStorage = (JSON.parse(localStorage.getItem('total')));
     const parse = (totalStorage).toFixed(2).replace('.', ',');
     return parse;
   };
+  // pega o valor total do local;
 
   const newTotalStorage = (subTotal) => {
     const totalStorage = JSON.parse(localStorage.getItem('total'));
@@ -21,6 +23,7 @@ export default function TableCheckout() {
     if (total <= 0) localStorage.setItem('total', 0);
     return localStorage.setItem('total', total);
   };
+  // calcula o novo total
 
   const filterList = () => {
     const array = getProductsStorage();
@@ -28,6 +31,7 @@ export default function TableCheckout() {
     const filteredQuantity = array.filter(validQuantity);
     setProducts(filteredQuantity);
   };
+  // filtra o array de products colocando somente os produtos que tem quantidade
 
   const removeItem = (id, subTotal) => {
     const remove = (value) => value.id !== id;
@@ -35,6 +39,7 @@ export default function TableCheckout() {
     newTotalStorage(subTotal);
     setProducts(deletedId);
   };
+  // filtra o array removendo o produto que teve o id clicado
 
   useEffect(() => {
     getTotalStorage();

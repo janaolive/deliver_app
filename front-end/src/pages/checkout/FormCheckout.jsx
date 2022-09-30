@@ -1,4 +1,24 @@
 export default function FormCheckout() {
+  /* const setSaleStorage = () => {
+    const newSale = {
+      userId: 3,
+      sellerId: 2,
+      totalPrice: 22333,
+      deliveryAddress: Rua Brasil, Bloco Trybe,
+      deliveryNumber: 986490818,
+      status: Pendente,
+      products: [
+        {
+          id: 1,
+          quantity: 3
+        }
+      ]
+    } */
+
+  // pegar id do vendedor
+  // pegar valor dos inputs
+  // salvar tudo como uma chave no localStorage
+
   return (
     <div>
       <form>

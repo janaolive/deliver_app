@@ -1,9 +1,19 @@
 import NavBar from '../products/components/NavBar';
 import FormCheckout from './FormCheckout';
 import TableCheckout from './TableCheckout';
+import api from '../../services/Api';
 
 export default function Checkout() {
-  const handleClick = async () => redirect('/order/checkout');
+  // pegar as duas chaves do local storage, uma da tabela ou do formulário
+  // enviar aqui para a rota e fazer o redirect
+  const handleClick = async () => {
+    try {
+      const product = await api.post('/customer/orders', {});
+      redirect(`/customer/orders/${product}`);
+    } catch (error) {
+      throw new Error('teste');
+    }
+  };
 
   return (
     <main>

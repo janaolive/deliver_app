@@ -23,7 +23,7 @@ const registerService = {
     const dataValues = await models.User.findOne({
       where: { name, email },
     });
-    console.log('dataValues');
+    // console.log('dataValues');
     if (dataValues) throw new ValidateError(409, 'User already exists');
 
     const createHash = md5(password);
