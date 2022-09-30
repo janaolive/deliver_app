@@ -1,12 +1,12 @@
 const Sale = (sequelize, DataTypes) => {
   const Sale = sequelize.define('Sale', {
     userId: {
-      primaryKey: true,
+      // primaryKey: true,
       type: DataTypes.INTEGER,
       field: 'user_id'
     },
     sellerId: {
-      primaryKey: true,
+      // primaryKey: true,
       type: DataTypes.INTEGER,
       field: 'seller_id'
     },
