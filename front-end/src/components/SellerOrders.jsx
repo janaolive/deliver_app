@@ -13,8 +13,8 @@ export default function SellerOrderDetails() {
   return (
     <main>
       <div>
-        <a href={ `/seller/orders/:${id}` }>
-          <div>
+        <div>
+          <a href={ `/seller/orders/:${id}` }>
             <h4
               data-testid={
                 `seller_order_details__element-order-details-label-order-${id}`
@@ -23,8 +23,8 @@ export default function SellerOrderDetails() {
               Pedido 000
               {id}
             </h4>
-          </div>
-        </a>
+          </a>
+        </div>
         <div>
           <h4
             data-testid={ `seller_orders__element-delivery-status-${id}` }
