@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-/* import { Card, CardBody, CardTitle, CardText, Button, Input } from 'reactstrap'; */
+import { Card, CardBody, CardTitle, CardText, Button, Input } from 'reactstrap';
 
 import api from '../../services/Api';
 import CarShop from './components/CarShop';
@@ -77,7 +77,7 @@ export default function CustomProducts() {
   function makeProducts(product, index) {
     const { name, id, urlImage, price } = product;
     return (
-      <div
+      <Card
         key={ index }
         style={ {
           width: '18rem',
@@ -86,32 +86,31 @@ export default function CustomProducts() {
         <img
           alt={ name }
           src={ urlImage }
-          className="img-fluid img-thumbnail"
+          className="imgSize img-fluid img-thumbnail"
           data-testid={ `customer_products__img-card-bg-image-${id}` }
         />
-        <div className="bodyCard">
-          <div
+        <CardBody className="bodyCard">
+          <CardTitle
             tag="h5"
             data-testid={ `customer_products__element-card-title-${id}` }
           >
             { name }
-          </div>
-          <div
+          </CardTitle>
+          <CardText
             data-testid={ `customer_products__element-card-price-${id}` }
           >
             { price.replace('.', ',') }
-          </div>
+          </CardText>
           <div className="cardButton">
-            <button
+            <Button
               color="success"
-              type="button"
               name="menos"
               data-testid={ `customer_products__button-card-rm-item-${id}` }
               onClick={ (e) => validadeButton(e.target, product) }
             >
               -
-            </button>
-            <input
+            </Button>
+            <Input
               type="text"
               data-testid={ `customer_products__input-card-quantity-${id}` }
               placeholder="0"
@@ -120,19 +119,18 @@ export default function CustomProducts() {
               onFocus={ (e) => inputOnFocus(e.target) }
               onBlur={ (e) => inputOnBlur(e.target, product) }
             />
-            <button
+            <Button
               color="success"
-              type="button"
               name="mais"
               id={ name }
               onClick={ (e) => validadeButton(e.target, product) }
               data-testid={ `customer_products__button-card-add-item-${id}` }
             >
               +
-            </button>
+            </Button>
           </div>
-        </div>
-      </div>
+        </CardBody>
+      </Card>
     );
   }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-/* import { Button } from 'reactstrap'; */
+import { Button } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 
 export default function CarShop() {
@@ -17,14 +17,19 @@ export default function CarShop() {
   }, [total]);
   const totalValue = total.replace('.', ',');
   return (
-    <button
-      type="button"
-      color="success"
-      data-testid="customer_products__checkout-bottom-value"
+    <Button
+      data-testid="customer_products__button-cart"
       disabled={ disable }
-      onClick={ handleClick }
     >
-      { totalValue }
-    </button>
+      <Button
+        type="button"
+        color="success"
+        data-testid="customer_products__checkout-bottom-value"
+        disabled={ disable }
+        onClick={ handleClick }
+      >
+        { totalValue }
+      </Button>
+    </Button>
   );
 }
