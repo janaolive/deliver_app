@@ -13,16 +13,18 @@ export default function SellerOrderDetails() {
   return (
     <main>
       <div>
-        <div>
-          <h4
-            data-testid={
-              `seller_order_details__element-order-details-label-order-${id}`
-            }
-          >
-            Pedido 000
-            {id}
-          </h4>
-        </div>
+        <a href={ `/seller/orders/:${id}` }>
+          <div>
+            <h4
+              data-testid={
+                `seller_order_details__element-order-details-label-order-${id}`
+              }
+            >
+              Pedido 000
+              {id}
+            </h4>
+          </div>
+        </a>
         <div>
           <h4
             data-testid={ `seller_orders__element-delivery-status-${id}` }
@@ -44,14 +46,16 @@ export default function SellerOrderDetails() {
 
       <div>
         <div>
-          <h4
-            data-testid={
-              `seller_order_details__element-order-details-label-order-${id}`
-            }
-          >
-            Pedido 000
-            {id + 1 }
-          </h4>
+          <a href={ `/seller/orders/:${id}` }>
+            <h4
+              data-testid={
+                `seller_order_details__element-order-details-label-order-${id}`
+              }
+            >
+              Pedido 000
+              {id + 1 }
+            </h4>
+          </a>
         </div>
         <div>
           <h4
@@ -74,14 +78,16 @@ export default function SellerOrderDetails() {
 
       <div>
         <div>
-          <h4
-            data-testid={
-              `seller_order_details__element-order-details-label-order-${id + 2}`
-            }
-          >
-            Pedido 000
-            {id + 2}
-          </h4>
+          <a href={ `/seller/orders/:${id}` }>
+            <h4
+              data-testid={
+                `seller_order_details__element-order-details-label-order-${id + 2}`
+              }
+            >
+              Pedido 000
+              {id + 2}
+            </h4>
+          </a>
         </div>
         <div>
           <h4
