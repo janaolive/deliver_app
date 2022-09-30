@@ -40,9 +40,11 @@ export default function LoginForm() {
   const handleSubmit = async () => {
     try {
       const login = await api.post('/login', { email, password });
+      const seller = await api.get('/login');
       setUser(login);
       // console.log(login.data);
       localStorage.setItem('user', JSON.stringify(login.data));
+      localStorage.setItem('seller', JSON.stringify(seller));
       await redirectUser(login.data);
     } catch (error) {
       setError(true);
@@ -55,7 +57,7 @@ export default function LoginForm() {
     >
       <div className="titleDiv">
         <img className="logoBeer" src={ logo } alt="logo do app" />
-        <h1 className="title">Grupo 11</h1>
+        <h1 className="title">Ubiritis</h1>
       </div>
       <Container className="container text-center  bg-light border">
         <Form>

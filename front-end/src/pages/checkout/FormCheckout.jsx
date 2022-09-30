@@ -1,3 +1,5 @@
+import api from '../../services/Api';
+
 export default function FormCheckout() {
   /* const setSaleStorage = () => {
     const newSale = {
@@ -15,7 +17,6 @@ export default function FormCheckout() {
       ]
     } */
 
-  // pegar id do vendedor
   // pegar valor dos inputs
   // salvar tudo como uma chave no localStorage
 

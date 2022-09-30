@@ -37,6 +37,16 @@ const loginService = {
 
     return { id, name, email, role, token };
   },
+
+  async getByRole() {
+    const role = 'seller';
+
+    const dataValues = await db.User.findOne({
+      where: { role }, raw: true,
+    });
+
+    return { id: dataValues.id, name: dataValues.name };
+  },
 };
 
 module.exports = loginService;
