@@ -3,6 +3,8 @@ import FormCheckout from './FormCheckout';
 import TableCheckout from './TableCheckout';
 
 export default function Checkout() {
+  const handleClick = async () => redirect('/order/checkout');
+
   return (
     <main>
       <NavBar />
@@ -12,7 +14,7 @@ export default function Checkout() {
       <FormCheckout />
       <button
         type="button"
-        // onClick={}
+        onClick={ handleClick }
         data-testid="customer_checkout__button-submit-order"
       >
         Finalizar Pedido

@@ -2,10 +2,12 @@ const { Router } = require('express');
 const customerController = require('../controllers/customerController');
 
 const customerRouter = Router();
+const orders = '/orders/:id';
 
 customerRouter.get('/products', customerController.findAll);
-customerRouter.post('/checkout', customerController.addCustomer);
-customerRouter.put('/orders/:id', customerController.upDateCustomer);
-customerRouter.get('/orders/:id', customerController.getByIdcustomer);
+customerRouter.post(orders, customerController.addCustomer);
+
+customerRouter.put(orders, customerController.updateCustomer);
+customerRouter.get(orders, customerController.getByIdCustomer);
 
 module.exports = customerRouter;

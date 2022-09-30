@@ -6,7 +6,6 @@ export default function TableCheckout() {
   const getProductsStorage = () => {
     const productsStorage = JSON.parse(localStorage.getItem('products'));
     const arrayProducts = Object.values(productsStorage);
-    // console.log('getStorage', arrayProducts);
     return arrayProducts;
   };
 
@@ -17,14 +16,11 @@ export default function TableCheckout() {
   };
 
   const newTotalStorage = (subTotal) => {
-    console.log('aqui', subTotal);
     const totalStorage = JSON.parse(localStorage.getItem('total'));
     const total = (+(totalStorage) - +(subTotal)).toFixed(2);
     if (total <= 0) localStorage.setItem('total', 0);
     return localStorage.setItem('total', total);
   };
-
-  console.log('fora', products);
 
   const filterList = () => {
     const array = getProductsStorage();
