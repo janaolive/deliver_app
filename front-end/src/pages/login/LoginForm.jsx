@@ -44,7 +44,7 @@ export default function LoginForm() {
       setUser(login);
       // console.log(login.data);
       localStorage.setItem('user', JSON.stringify(login.data));
-      localStorage.setItem('seller', JSON.stringify(seller));
+      localStorage.setItem('seller', JSON.stringify(seller.data));
       await redirectUser(login.data);
     } catch (error) {
       setError(true);

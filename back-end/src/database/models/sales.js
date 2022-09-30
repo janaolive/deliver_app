@@ -12,7 +12,7 @@ const Sale = (sequelize, DataTypes) => {
     },
     totalPrice: {
       allowNull: false,
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(4, 2),
       field: 'total_price'
     },
     deliveryAddress: {

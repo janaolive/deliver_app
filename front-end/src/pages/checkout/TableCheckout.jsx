@@ -30,6 +30,7 @@ export default function TableCheckout() {
     const validQuantity = (value) => value.quantity > 0;
     const filteredQuantity = array.filter(validQuantity);
     setProducts(filteredQuantity);
+    localStorage.setItem('checkoutProducts', JSON.stringify(filteredQuantity));
   };
   // filtra o array de products colocando somente os produtos que tem quantidade
 
@@ -38,6 +39,7 @@ export default function TableCheckout() {
     const deletedId = products.filter(remove);
     newTotalStorage(subTotal);
     setProducts(deletedId);
+    localStorage.setItem('checkoutProducts', JSON.stringify(deletedId));
   };
   // filtra o array removendo o produto que teve o id clicado
 
