@@ -30,7 +30,7 @@ export default function CustomProducts() {
         [name]:
           { name, id, price, quantity: productQnt, subTotal: sub,
           } }));
-      console.log(id);
+      // console.log(id);
       break;
     case 'menos':
       if (productQnt > 0) {
@@ -154,9 +154,11 @@ export default function CustomProducts() {
       setError(true);
     }
   };
+
   useEffect(() => {
     setTotal(totalPrice(subTotal));
   }, [subTotal]);
+
   useEffect(() => {
     localStorage.setItem('products', JSON.stringify(valueState));
   }, [valueState]);
@@ -164,6 +166,7 @@ export default function CustomProducts() {
   useEffect(() => {
     handleFetch();
   }, []);
+
   return (
     <main>
       <NavBar />

@@ -1,11 +1,54 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function TableCheckout() {
-  const [items, setItems] = useState([
-    { itemName: 'item 1', quantity: 1 },
-    { itemName: 'item 2', quantity: 3 },
-    { itemName: 'item 3', quantity: 2 },
-  ]);
+  const [products, setProducts] = useState([]);
+
+  const getProductsStorage = () => {
+    const productsStorage = JSON.parse(localStorage.getItem('products'));
+    const arrayProducts = Object.values(productsStorage);
+    // console.log('getStorage', arrayProducts);
+    return arrayProducts;
+  };
+
+  const getTotalStorage = () => {
+    const totalStorage = (JSON.parse(localStorage.getItem('total')));
+    const parse = (totalStorage).toFixed(2).replace('.', ',');
+    return parse;
+  };
+
+  const newTotalStorage = (subTotal) => {
+    console.log('aqui', subTotal);
+    const totalStorage = JSON.parse(localStorage.getItem('total'));
+    const total = (+(totalStorage) - +(subTotal)).toFixed(2);
+    if (total <= 0) localStorage.setItem('total', 0);
+    return localStorage.setItem('total', total);
+  };
+
+  console.log('fora', products);
+
+  const filterList = () => {
+    const array = getProductsStorage();
+    const validQuantity = (value) => value.quantity > 0;
+    const filteredQuantity = array.filter(validQuantity);
+    setProducts(filteredQuantity);
+  };
+
+  const removeItem = (id, subTotal) => {
+    const remove = (value) => value.id !== id;
+    const deletedId = products.filter(remove);
+    newTotalStorage(subTotal);
+    setProducts(deletedId);
+  };
+
+  useEffect(() => {
+    getTotalStorage();
+  });
+
+  useEffect(() => {
+    getProductsStorage();
+    filterList();
+  }, []);
+
   return (
     <div>
       <table>
@@ -15,20 +58,20 @@ export default function TableCheckout() {
             <th>Descrição</th>
             <th>Quantidade</th>
             <th>Valor Unitário</th>
-            <th>Valor Sub-total</th>
+            <th>Sub-total</th>
             <th>Remover Item</th>
           </tr>
         </thead>
         <tbody>
           {
-            items.map((item, index) => (
+            products.map((item, index) => (
               <tr key={ index }>
                 <td
                   data-testid={
                     `customer_checkout__element-order-table-item-number-${index}`
                   }
                 >
-                  { index }
+                  { index + 1 }
                 </td>
                 <td
                   data-testid={
@@ -49,14 +92,14 @@ export default function TableCheckout() {
                     `customer_checkout__element-order-table-unit-price-${index}`
                   }
                 >
-                  { item.value }
+                  { (item.price).replace('.', ',') }
                 </td>
                 <td
                   data-testid={
                     `customer_checkout__element-order-table-sub-total-${index}`
                   }
                 >
-                  { item.total }
+                  { (item.subTotal).toFixed(2).replace('.', ',') }
                 </td>
                 <td
                   data-testid={
@@ -65,6 +108,7 @@ export default function TableCheckout() {
                 >
                   <button
                     type="button"
+                    onClick={ () => removeItem(item.id, item.subTotal) }
                   >
                     Remover Item
                   </button>
@@ -75,10 +119,14 @@ export default function TableCheckout() {
         </tbody>
       </table>
       <div>
-        <h3>
-          Total:
-          { total }
-        </h3>
+        Total: R$
+        {' '}
+        <div
+          data-testid="customer_checkout__element-order-total-price"
+        >
+          {' '}
+          { getTotalStorage() }
+        </div>
       </div>
     </div>
   );

@@ -6,7 +6,9 @@ export default function CarShop() {
   const [disable, setDisabled] = useState(true);
   const total = localStorage.getItem('total');
   const redirect = useNavigate();
+
   const handleClick = async () => redirect('/customer/checkout');
+
   const handleButton = (value) => {
     if (value > 0) setDisabled(false);
     if (value === 0) setDisabled(true);
@@ -15,7 +17,9 @@ export default function CarShop() {
   useEffect(() => {
     handleButton(Number(total));
   }, [total]);
+
   const totalValue = total.replace('.', ',');
+
   return (
     <Button
       data-testid="customer_products__button-cart"

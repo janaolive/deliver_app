@@ -8,7 +8,7 @@ export default function FormCheckout() {
             name="seller"
             data-testid="customer_checkout__select-seller"
           >
-            <option value={ seller.id }>{ seller.name }</option>
+            <option value="2">Fulana Pereira</option>
           </select>
         </label>
         <label htmlFor="address">
