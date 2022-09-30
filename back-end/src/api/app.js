@@ -1,10 +1,10 @@
 const express = require('express');
-const cors = require('cors');
 require('express-async-errors');
-
+const cors = require('cors');
 const loginRouter = require('../routers/loginRouter');
 const registerRouter = require('../routers/registerRouter');
-const customerProductsRouter = require('../routers/customerProductsRouter');
+const sellerRouter = require('../routers/sellerRouter');
+const customerRouter = require('../routers/customerRouter');
 
 const app = express();
 app.use(express.json());
@@ -14,10 +14,8 @@ app.use(cors());
 app.use('/images', express.static('public'));
 app.use('/', loginRouter);
 app.use('/register', registerRouter);
-app.use('/customer/products', customerProductsRouter);
-
+app.use('/seller', sellerRouter);
+app.use('/customer', customerRouter);
 app.get('/coffee', (_req, res) => res.status(418).end());
-
-// app.use(errorsMiddleware);
 
 module.exports = app;
