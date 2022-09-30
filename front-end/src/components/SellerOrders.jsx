@@ -2,7 +2,7 @@
 
 const { useState } = require('react');
 
-export default function SellerOrderDetails() {
+export default function SellerOrders() {
   const [order] = useState(0);
 
   // Passar o id por params depois de implementar o backend
