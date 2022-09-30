@@ -3,9 +3,10 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import LoginForm from './pages/login/LoginForm';
 import RegisterForm from './pages/registro/RegisterForm';
-import NotFoud from './pages/notFound';
-import CustomProducts from './pages/products/CustomerProducts';
-import CustomOrders from './pages/products/CustomerOrders';
+import NotFound from './pages/notFound';
+import Checkout from './pages/checkout/Checkout';
+import CustomerProducts from './pages/products/CustomerProducts';
+import CustomerOrders from './pages/products/CustomerOrders';
 
 function App() {
   return (
@@ -14,11 +15,11 @@ function App() {
         <Routes>
           <Route exact path="/login" element={ <LoginForm /> } />
           <Route exact path="/register" element={ <RegisterForm /> } />
-          <Route exact path="/seller/orders" element={ <NotFoud /> } />
-          <Route exact path="/customer/products" element={ <CustomProducts /> } />
-          <Route exact path="/customer/checkout" element={ <NotFoud /> } />
-          <Route exact path="/customer/orders" element={ <CustomOrders /> } />
-          <Route exact path="/admin/manage" element={ <NotFoud /> } />
+          <Route exact path="/seller/orders" element={ <NotFound /> } />
+          <Route exact path="/customer/products" element={ <CustomerProducts /> } />
+          <Route exact path="/customer/checkout" element={ <Checkout /> } />
+          <Route exact path="/customer/orders" element={ <CustomerOrders /> } />
+          <Route exact path="/admin/manage" element={ <NotFound /> } />
           <Route exact path="/" element={ <Navigate to="/login" /> } />
         </Routes>
       </main>

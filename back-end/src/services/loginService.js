@@ -33,9 +33,9 @@ const loginService = {
     }
 
     const token = setToken({ id, name, role });
-    console.log(token);
+    // console.log(token);
 
-    return { name, email, role, token };
+    return { id, name, email, role, token };
   },
 
   async getByRole() {
