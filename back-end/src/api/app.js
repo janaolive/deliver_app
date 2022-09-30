@@ -11,6 +11,7 @@ app.use(express.json());
 
 app.use(cors());
 
+app.use('/images', express.static('public'));
 app.use('/', loginRouter);
 app.use('/register', registerRouter);
 app.use('/seller', sellerRouter);

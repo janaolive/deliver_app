@@ -33,8 +33,19 @@ const loginService = {
     }
 
     const token = setToken({ id, name, role });
+    console.log(token);
 
-    return { token, role };
+    return { name, email, role, token };
+  },
+
+  async getByRole() {
+    const role = 'seller';
+
+    const dataValues = await db.User.findOne({
+      where: { role }, raw: true,
+    });
+
+    return { id: dataValues.id, name: dataValues.name };
   },
 };
 
