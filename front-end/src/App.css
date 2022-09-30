@@ -45,6 +45,10 @@
   text-align: center;
 }
 
+.imgSize {
+  max-width: 10px;
+}
+
 .container {
   border-radius: 10px;
   padding: 20px;
@@ -54,8 +58,21 @@
   margin: 5px;
 }
 
-.row {
-  padding: 15px;
+.cardGroup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bodyCard {
+  display: flex;
+  flex-flow: column;
+  flex-wrap: nowrap;
+}
+
+.cardButton {
+  display: flex;
+  flex-direction: row;
 }
 
 .rocksGlass {
