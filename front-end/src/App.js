@@ -20,13 +20,13 @@ function App() {
           <Route exact path="/customer/products" element={ <CustomerProducts /> } />
           <Route exact path="/customer/checkout" element={ <Checkout /> } />
           <Route exact path="/customer/orders" element={ <CustomerOrders /> } />
-          <Route exact path="/admin/manage" element={ <NotFound /> } />
           <Route
             exact
             path="/seller/orders/:id"
             element={ <SellerOrdersDetailsPage /> }
           />
           <Route exact path="/seller/orders" element={ <SellerOrdersPage /> } />
+          <Route exact path="/admin/manage" element={ <NotFound /> } />
           <Route exact path="/" element={ <Navigate to="/login" /> } />
         </Routes>
       </main>
