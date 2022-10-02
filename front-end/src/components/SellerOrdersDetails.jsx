@@ -8,7 +8,7 @@ export default function SellerOrderDetails() {
 
   return (
     <main>
-      <h4>Detalhe do Pedido</h4>
+      <h4>Detalhes do Pedido</h4>
       <div>
         <h3
           data-testid={
