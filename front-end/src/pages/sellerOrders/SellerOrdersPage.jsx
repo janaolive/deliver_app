@@ -1,5 +1,5 @@
-import SellerOrders from '../../components/SellerOrders';
-import Header from '../../components/Header';
+import SellerOrders from './SellerOrders';
+import Header from './Header';
 
 export default function SellerOrderDetailsPage() {
   return (
