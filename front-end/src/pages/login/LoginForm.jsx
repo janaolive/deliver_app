@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, FormGroup, Input, Label, Button, Alert, Container } from 'reactstrap';
 import UserContext from '../../context/user/context';
@@ -22,7 +22,7 @@ export default function LoginForm() {
     </Alert>);
 
   const redirect = useNavigate();
-  async function redirectUser(user) {
+  function redirectUser(user) {
     switch (user.role) {
     case 'customer':
       redirect('/customer/products');
@@ -45,11 +45,16 @@ export default function LoginForm() {
       // console.log(login.data);
       localStorage.setItem('user', JSON.stringify(login.data));
       localStorage.setItem('seller', JSON.stringify(seller.data));
-      await redirectUser(login.data);
+      redirectUser(login.data);
     } catch (error) {
       setError(true);
     }
   };
+
+  useEffect(() => {
+    const usuario = JSON.parse(localStorage.getItem('user'));
+    if (usuario) redirectUser(usuario);
+  }, []);
 
   return (
     <main

@@ -48,7 +48,7 @@ export default function CustomOrders() {
               <div
                 data-testid={ `customer_orders__element-card-price-${item.id}` }
               >
-                {item.totalPrice}
+                {item.totalPrice.replace('.', ',')}
 
               </div>
             </Link>
