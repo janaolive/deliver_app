@@ -42,7 +42,7 @@ export default function CustomOrders() {
               <div
                 data-testid={ `customer_orders__element-order-date-${item.id}` }
               >
-                {item.saleDate}
+                {item.saleDate.split('T')[0].split('-').reverse().join('/')}
 
               </div>
               <div
@@ -56,7 +56,6 @@ export default function CustomOrders() {
 
         ))
       }
-      <div>oi</div>
     </main>
   );
 }
