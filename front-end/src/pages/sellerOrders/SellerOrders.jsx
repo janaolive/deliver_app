@@ -60,10 +60,12 @@ export default function SellerOrders() {
         </div>
 
         <span data-testid={ `seller_orders__element-order-date-${id}` }>
-          {saleDate}
+          {saleDate
+            ? saleDate.split('T')[0].split('-').reverse().join('/')
+            : null}
         </span>
         <span data-testid={ `seller_orders__element-card-price-${id}` }>
-          {totalPrice}
+          {`R$${totalPrice.replace('.', ',')}`}
         </span>
         <span data-testid={ `seller_orders__element-card-address-${id}` }>
           { `${deliveryAddress}, ${deliveryNumber}` }

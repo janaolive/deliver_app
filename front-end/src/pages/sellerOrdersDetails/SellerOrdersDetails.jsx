@@ -35,6 +35,15 @@ export default function SellerOrders() {
     detailsProducts();
   }, [products]);
 
+  // const makeDate = () => {
+  //   const { saleDate } = products;
+  //   const newDate = saleDate.toLocaleDateString('pt-BR')
+  //     .substr(0, 10).split('-').reverse()
+  //     .join('/');
+  //   products.push(newDate);
+  //   return newDate;
+  // };
+
   const makeProducts = (product, index) => {
     const { name, price } = product;
     const { quantity } = product.SaleProduct;
@@ -73,21 +82,21 @@ export default function SellerOrders() {
                 data-testid={ `seller_order_details__element-order-table-unit-price-
             ${index}` }
               >
-                {price}
+                {`${price.replace('.', ',')}`}
               </td>
               <td
                 data-testid={ `seller_order_details__element-order-table-sub-total-
               ${index}` }
               >
                 R$
-                {price}
+                {`${price.replace('.', ',')}`}
               </td>
             </tr>
           </tbody>
         </table>
         <footer>
           <h2 data-testid="seller_order_details__element-order-total-price">
-            Total: R$
+            Total:
             {' '}
             {quantity * price}
           </h2>
@@ -97,7 +106,6 @@ export default function SellerOrders() {
   };
 
   const { status, id, saleDate } = order;
-  console.log(id);
   return (
     <>
       <h4>Detalhes do Pedido</h4>
@@ -110,7 +118,9 @@ export default function SellerOrders() {
           {`PEDIDO 000${id}`}
         </h3>
         <span data-testid="seller_order_details__element-order-details-label-order-date">
-          {saleDate}
+          {saleDate
+            ? saleDate.split('T')[0].split('-').reverse().join('/')
+            : null}
         </span>
         <h3
           data-testid="seller_order_details__element-order-details-label-delivery-status"
