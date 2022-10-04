@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, ListGroup, ListGroupItem, Table } from 'reactstrap';
+/* import { Button, ListGroup, ListGroupItem, Table } from 'reactstrap'; */
 import { useParams } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import api from '../../services/Api';
@@ -31,45 +31,41 @@ export default function CustomOrdersDetails() {
       {
         details.map((item, index) => {
           const { id, saleDate, status, seller, products } = item;
+          const pageName = 'customer_order_details__';
           return (
             <section key={ index }>
-              <ListGroup horizontal>
-                <ListGroupItem
-                  data-
-                  testid="customer_order_details__element-order-details-label-order-id"
+              <div horizontal>
+                <p
+                  data-testid={ `${pageName}element-order-details-label-order-id` }
                 >
                   {`Pedido: ${id}`}
-                </ListGroupItem>
-                <ListGroupItem
-                  data-
-                  testid="customer_order_details__element-order-details-label-seller-name"
+                </p>
+                <p
+                  data-testid={ `${pageName}element-order-details-label-seller-name` }
                 >
                   {`P.Vend: ${seller.name}` }
-                </ListGroupItem>
-                <ListGroupItem
-                  data-
-                  testid="customer_order_details__element-order-details-label-order-date"
+                </p>
+                <p
+                  data-testid={ `${pageName}element-order-details-label-order-date` }
                 >
                   {saleDate.split('T')[0].split('-').reverse().join('/')}
-                </ListGroupItem>
-                <ListGroupItem
-                  data-
-                  testid={
-                    `customer_order_details__element-order-details-label-delivery-status
-                ${id}`
+                </p>
+                <p
+                  data-testid={
+                    `${pageName}element-order-details-label-delivery-status-${id}`
                   }
                 >
                   {status}
-                </ListGroupItem>
-                <Button
+                </p>
+                <button
                   disabled
                   type="button"
-                  data-testid="customer_order_details__button-delivery-check"
+                  data-testid={ `${pageName}button-delivery-check` }
                 >
                   Marcar como Entregue
-                </Button>
-              </ListGroup>
-              <Table key={ index } hover>
+                </button>
+              </div>
+              <div key={ index } hover>
                 <thead>
                   <tr>
                     <th>
@@ -97,46 +93,34 @@ export default function CustomOrdersDetails() {
                       <tr>
                         <th
                           scope="row"
-                          data-
-                          testid={
-                            `customer_order_details__element-order-table-item-number-
-                            ${pIndex}`
+                          data-testid={
+                            `${pageName}element-order-table-item-number-${pIndex}`
                           }
                         >
                           { pIndex + 1 }
                         </th>
                         <td
-                          data-
-                          testid={
-                            `customer_order_details__element-order-table-name-
-                            ${pIndex}`
-                          }
+                          data-testid={ `${pageName}element-order-table-name-${pIndex}` }
                         >
                           { product.name }
                         </td>
                         <td
-                          data-
-                          testid={
-                            `customer_order_details__element-order-table-quantity-
-                            ${pIndex}`
+                          data-testid={
+                            `${pageName}element-order-table-quantity-${pIndex}`
                           }
                         >
                           { product.SaleProduct.quantity}
                         </td>
                         <td
-                          data-
-                          testid={
-                            `customer_order_details__element-order-table-unit-price-
-                            ${pIndex}`
+                          data-testid={
+                            `${pageName}element-order-table-unit-price-${pIndex}`
                           }
                         >
                           { product.price.replace('.', ',') }
                         </td>
                         <td
-                          data-
-                          testid={
-                            `customer_order_details__element-order-table-sub-total-
-                            ${pIndex}`
+                          data-testid={
+                            `${pageName}element-order-table-sub-total-${pIndex}`
                           }
                         >
                           { subtotal }
@@ -145,11 +129,11 @@ export default function CustomOrdersDetails() {
                     </tbody>
                   );
                 })}
-              </Table>
+              </div>
               <div
-                data-testid="customer_order_details__element-order-total-price"
+                data-testid={ `${pageName}element-order-total-price` }
               >
-                {`Total: ${item.totalPrice}`}
+                {item.totalPrice.replace('.', ',')}
               </div>
             </section>
           );

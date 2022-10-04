@@ -85,7 +85,7 @@ export default function CustomProducts() {
         <img
           alt={ name }
           src={ urlImage }
-          className="imgSize img-fluid img-thumbnail"
+          className="img-responsive imgSize img-fluid img-thumbnail"
           data-testid={ `customer_products__img-card-bg-image-${id}` }
         />
         <CardBody className="bodyCard">
