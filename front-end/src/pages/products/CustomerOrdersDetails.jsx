@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Button, ListGroup, ListGroupItem } from 'reactstrap';
-/* import { useParams } from 'react-router-dom'; */
+import { Button, ListGroup, ListGroupItem, Table } from 'reactstrap';
+import { useParams } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import api from '../../services/Api';
 
 export default function CustomOrdersDetails() {
   const [details, setDetails] = useState([]);
-  /*   const params = useParams(); */
+  const params = useParams();
 
   const handleFetch = async () => {
     try {
       const detailsList = await api.get('/seller/orders');
       const sales = detailsList.data;
-      const result = await sales.filter((sale) => sale.id === 2);
+      const result = await sales.filter((sale) => sale.id === Number(params.id));
       console.log(result);
       setDetails(result);
     } catch (error) {
@@ -30,48 +30,131 @@ export default function CustomOrdersDetails() {
       <h3>Detalhe do Pedido</h3>
       {
         details.map((item, index) => {
-          const { id, saleDate, status } = item;
+          const { id, saleDate, status, seller, products } = item;
           return (
-            <ListGroup horizontal key={ index }>
-              <ListGroupItem
-                data-testid={
-                  `customer_order_details__element-order-details-label-order-${id}`
-                }
-              >
-                {id}
-              </ListGroupItem>
-              <ListGroupItem
-                data-
-                testid="customer_order_details__element-order-details-label-seller-name"
-              >
-                P.Vend:
-              </ListGroupItem>
-              <ListGroupItem
-                data-
-                testid="customer_order_details__element-order-details-label-order-date"
-              >
-                {saleDate}
-              </ListGroupItem>
-              <ListGroupItem
-                data-
-                testid={
-                  `customer_order_details__element-order-details-label-delivery-status
+            <section key={ index }>
+              <ListGroup horizontal>
+                <ListGroupItem
+                  data-
+                  testid="customer_order_details__element-order-details-label-order-id"
+                >
+                  {`Pedido: ${id}`}
+                </ListGroupItem>
+                <ListGroupItem
+                  data-
+                  testid="customer_order_details__element-order-details-label-seller-name"
+                >
+                  {`P.Vend: ${seller.name}` }
+                </ListGroupItem>
+                <ListGroupItem
+                  data-
+                  testid="customer_order_details__element-order-details-label-order-date"
+                >
+                  {saleDate.split('T')[0].split('-').reverse().join('/')}
+                </ListGroupItem>
+                <ListGroupItem
+                  data-
+                  testid={
+                    `customer_order_details__element-order-details-label-delivery-status
                 ${id}`
-                }
+                  }
+                >
+                  {status}
+                </ListGroupItem>
+                <Button
+                  disabled
+                  type="button"
+                  data-testid="customer_order_details__button-delivery-check"
+                >
+                  Marcar como Entregue
+                </Button>
+              </ListGroup>
+              <Table key={ index } hover>
+                <thead>
+                  <tr>
+                    <th>
+                      Item
+                    </th>
+                    <th>
+                      Descrição
+                    </th>
+                    <th>
+                      Quantidade
+                    </th>
+                    <th>
+                      Valor Unitario
+                    </th>
+                    <th>
+                      Sub-total
+                    </th>
+                  </tr>
+                </thead>
+                { products.map((product, pIndex) => {
+                  const preco = product.price * product.SaleProduct.quantity;
+                  const subtotal = preco.toFixed(2).toString().replace('.', ',');
+                  return (
+                    <tbody key={ pIndex }>
+                      <tr>
+                        <th
+                          scope="row"
+                          data-
+                          testid={
+                            `customer_order_details__element-order-table-item-number-
+                            ${pIndex}`
+                          }
+                        >
+                          { pIndex + 1 }
+                        </th>
+                        <td
+                          data-
+                          testid={
+                            `customer_order_details__element-order-table-name-
+                            ${pIndex}`
+                          }
+                        >
+                          { product.name }
+                        </td>
+                        <td
+                          data-
+                          testid={
+                            `customer_order_details__element-order-table-quantity-
+                            ${pIndex}`
+                          }
+                        >
+                          { product.SaleProduct.quantity}
+                        </td>
+                        <td
+                          data-
+                          testid={
+                            `customer_order_details__element-order-table-unit-price-
+                            ${pIndex}`
+                          }
+                        >
+                          { product.price.replace('.', ',') }
+                        </td>
+                        <td
+                          data-
+                          testid={
+                            `customer_order_details__element-order-table-sub-total-
+                            ${pIndex}`
+                          }
+                        >
+                          { subtotal }
+                        </td>
+                      </tr>
+                    </tbody>
+                  );
+                })}
+              </Table>
+              <div
+                data-testid="customer_order_details__element-order-total-price"
               >
-                {status}
-              </ListGroupItem>
-              <Button
-                type="button"
-                data-testid="customer_order_details__button-delivery-check"
-              >
-                Marcar como Entregue
-              </Button>
-            </ListGroup>
+                {`Total: ${item.totalPrice}`}
+              </div>
+            </section>
           );
         })
       }
-      <div>oi</div>
     </main>
   );
 }
