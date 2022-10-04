@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardBody, CardTitle, CardText, Button, Input } from 'reactstrap';
-
 import api from '../../services/Api';
 import CarShop from './components/CarShop';
 import NavBar from './components/NavBar';
@@ -137,6 +136,7 @@ export default function CustomProducts() {
   const handleFetch = async () => {
     try {
       const product = await api.get('/customer/products');
+      console.log(product);
       setProducts(product.data);
       const nameMap = product.data.map(({ name, id, price }) => ({ name, id, price }))
         .reduce((acc, curr) => {

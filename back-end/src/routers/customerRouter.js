@@ -3,6 +3,7 @@ const customerController = require('../controllers/customerController');
 
 const customerRouter = Router();
 
+customerRouter.get('/products/:id', customerController.findProductById);
 customerRouter.get('/products', customerController.findAll);
 customerRouter.post('/orders', customerController.addCustomer);
 
