@@ -20,6 +20,12 @@ const customerController = {
     const customersUpdate = await customerService.updateCust(id, req.body);
     return res.status(200).json(customersUpdate);
   },
+
+  async findProductById(req, res) {
+    const { id } = req.params;
+    const product = await customerService.findProductById(id);
+    return res.status(200).json(product);
+  },
 };
 
 module.exports = customerController;
