@@ -6,9 +6,9 @@ const sellerController = {
     return res.status(200).json(orders);
   },
 
-  async findById(req, res) {
+  async findBySellerId(req, res) {
     const { id } = req.params;
-    const order = await sellerService.findById(id);
+    const order = await sellerService.findBySellerId(id);
     return res.status(200).json(order);
   },
 };

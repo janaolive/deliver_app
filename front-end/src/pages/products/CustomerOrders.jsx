@@ -15,7 +15,7 @@ export default function CustomOrders() {
       throw new Error('teste');
     }
   };
-  // console.log(ordersList);
+  const saveId = (target) => localStorage.setItem('id', JSON.stringify(target.id));
 
   useEffect(() => {
     handleFetch();
@@ -26,33 +26,36 @@ export default function CustomOrders() {
       <NavBar />
       {
         orders.map((item, index) => (
-          <div key={ index }>
-            <Link to={ `/customer/orders/${item.id}` }>
-              <div
-                data-testid={ `customer_orders__element-order-id-${item.id}` }
-              >
-                {item.id}
+          <Link
+            key={ index }
+            id={ item.id }
+            onClick={ (e) => saveId(e.target) }
+            to={ `/customer/orders/${item.id}` }
+          >
+            <p
+              data-testid={ `customer_orders__element-order-id-${item.id}` }
+            >
+              {item.id}
 
-              </div>
-              <div
-                data-testid={ `customer_orders__element-delivery-status-${item.id}` }
-              >
-                {item.status}
-              </div>
-              <div
-                data-testid={ `customer_orders__element-order-date-${item.id}` }
-              >
-                {item.saleDate.split('T')[0].split('-').reverse().join('/')}
+            </p>
+            <p
+              data-testid={ `customer_orders__element-delivery-status-${item.id}` }
+            >
+              {item.status}
+            </p>
+            <p
+              data-testid={ `customer_orders__element-order-date-${item.id}` }
+            >
+              {item.saleDate.split('T')[0].split('-').reverse().join('/')}
 
-              </div>
-              <div
-                data-testid={ `customer_orders__element-card-price-${item.id}` }
-              >
-                {item.totalPrice.replace('.', ',')}
+            </p>
+            <p
+              data-testid={ `customer_orders__element-card-price-${item.id}` }
+            >
+              {item.totalPrice.replace('.', ',')}
 
-              </div>
-            </Link>
-          </div>
+            </p>
+          </Link>
 
         ))
       }

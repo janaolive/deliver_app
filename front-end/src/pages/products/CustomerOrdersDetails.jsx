@@ -1,16 +1,20 @@
 import { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
+import { Button, ListGroup, ListGroupItem } from 'reactstrap';
+/* import { useParams } from 'react-router-dom'; */
 import NavBar from './components/NavBar';
 import api from '../../services/Api';
 
 export default function CustomOrdersDetails() {
   const [details, setDetails] = useState([]);
+  /*   const params = useParams(); */
 
   const handleFetch = async () => {
     try {
       const detailsList = await api.get('/seller/orders');
-      console.log(detailsList.data);
-      setDetails(detailsList.data);
+      const sales = detailsList.data;
+      const result = await sales.filter((sale) => sale.id === 2);
+      console.log(result);
+      setDetails(result);
     } catch (error) {
       throw new Error('teste');
     }
@@ -25,46 +29,47 @@ export default function CustomOrdersDetails() {
       <NavBar />
       <h3>Detalhe do Pedido</h3>
       {
-        details.map((item, index) => (
-          <div key={ index }>
-            <div>
-              <p
-                data-testid="customer_order_details__element-order-details-label-order-id"
+        details.map((item, index) => {
+          const { id, saleDate, status } = item;
+          return (
+            <ListGroup horizontal key={ index }>
+              <ListGroupItem
+                data-testid={
+                  `customer_order_details__element-order-details-label-order-${id}`
+                }
               >
-                {' '}
-                {item.id}
-              </p>
-              <p
+                {id}
+              </ListGroupItem>
+              <ListGroupItem
                 data-
                 testid="customer_order_details__element-order-details-label-seller-name"
               >
-                P.Vendedora:
-              </p>
-              <p
+                P.Vend:
+              </ListGroupItem>
+              <ListGroupItem
                 data-
                 testid="customer_order_details__element-order-details-label-order-date"
               >
-                {item.saleDate}
-              </p>
-              <p
+                {saleDate}
+              </ListGroupItem>
+              <ListGroupItem
                 data-
                 testid={
                   `customer_order_details__element-order-details-label-delivery-status
-                  ${item.id}`
+                ${id}`
                 }
               >
-                {item.status}
-              </p>
-              <button
+                {status}
+              </ListGroupItem>
+              <Button
                 type="button"
                 data-testid="customer_order_details__button-delivery-check"
               >
                 Marcar como Entregue
-              </button>
-            </div>
-          </div>
-
-        ))
+              </Button>
+            </ListGroup>
+          );
+        })
       }
       <div>oi</div>
     </main>
