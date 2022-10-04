@@ -5,6 +5,11 @@ const customerService = {
     const result = await models.Product.findAll({ raw: true });
     return result;
   },
+  
+  async findProductById(id) {
+    const product = await models.Product.findByPk(id);
+    return product;
+  },
 
   async customer(data) {
     const { products, ...sale } = data;

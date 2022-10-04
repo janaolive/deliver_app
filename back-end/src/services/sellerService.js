@@ -8,7 +8,7 @@ const sellerService = {
 
   async findById(id) {
     // console.log(id);
-    const order = await models.Sale.findOne({ where: { sellerId: id } });
+    const order = await models.Sale.findOne({ where: { id } });
     return order;
   },
 
