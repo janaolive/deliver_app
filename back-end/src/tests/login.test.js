@@ -1,28 +1,31 @@
-import * as sinon from 'sinon';
-import * as chai from 'chai';
-import { app } from '../app';
-import Users from '../database/models/users';
-import loginService from '../services/loginService';
-import ValidationError from '../middleWares/ValidateError';
+const sinon = require('sinon');
+const chai = require ('chai');
+const app = require ('../api/app');
+
+const chaiHttp = require('chai-http');
+
+const loginService = require ('../services/loginService');
+
+// const { User } = require ('../database/models/users');
+// const ValidationError = require ('../middleWares/ValidateError');
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-const userMock = {
-  id: 1,
-  username: "admin",
-  role: "admin",
-  email: "admin@admin.com",
-  password: "$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW"
+const utilsUser = {
+  body: {
+    "email": "adm@deliveryapp.com",
+    "password": "--adm2@21!!--",
+  },
+
+  bodyError: {
+    "email": "admin@appcrash.com",
+    "password": "admin1234@1234512345",
+  }
 }
 
-const bodyMock = {
-  email: "admin@email.com",
-  password: "secret_admin"
-}
-
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoxLCJ1c2VybmFtZSI6IkFkbWluIiwicm9sZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20ifSwiaWF0IjoxNjYxOTA3NzAzfQ.1NuT4HqDMOa5y1FCiShTlp8PCI2DwVtq7BOxoHkdy0g"
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoxLCJ1c2VybmFtZSI6IkFkbWluIiwicm9sZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20ifSwiaWF0IjoxNjYxOTA3NzAzfQ.1NuT4HqDMOa5y1FCiShTlp8PCI2DwVtq7BOxoHkdy0g";
 
 describe('Login', () => {
 
@@ -30,46 +33,30 @@ describe('Login', () => {
     sinon.restore();
   });
 
-  it('should return status 200', async () => {
-    sinon.stub(Users, "findOne")
-      .resolves(userMock)
-
-    const chaiHttpResponse = await chai.request(app)
+  it('test route: /users', async () => {
+    const response = await chai.request(app)
       .post('/login')
-      .send(bodyMock)
+      .send(utilsUser.body);
+    expect(response.status).to.equal(200);  
+  });
 
-    expect(chaiHttpResponse.status).to.equal(200);
-  })
   it('should return token', async () => {
     sinon.stub(loginService, "login")
       .resolves({ token })
 
     const chaiHttpResponse = await chai.request(app)
       .post('/login')
-      .send(bodyMock)
+      .send(token)
 
     expect(chaiHttpResponse.body.token).to.equal(token);
-  })
-  it('should return status 401', async () => {
-    sinon.stub(loginService, 'login').callsFake(() => {
-      throw new ValidationError(401, 'All fields must be filled')
-    })
+  });
 
-    const chaiHttpResponse = await chai.request(app)
+  it('test route error: /users', async () => {
+    const response = await chai.request(app)
       .post('/login')
-      .send(bodyMock)
+      .send(utilsUser.bodyError);
+    expect(response.body).to.have.property('message', 'Incorrect email or password')
+    expect(response.status).to.equal(404);  
+  });
 
-    expect(chaiHttpResponse.status).to.equal(401);
-  })
-  it('should return status 400 case password or email incorrect', async () => {
-    sinon.stub(loginService, 'login').callsFake(() => {
-      throw new ValidationError(400, 'Incorrect email or password')
-    })
-
-    const chaiHttpResponse = await chai.request(app)
-      .post('/login')
-      .send(bodyMock)
-
-    expect(chaiHttpResponse.status).to.equal(400);
-  })
-})
+});
