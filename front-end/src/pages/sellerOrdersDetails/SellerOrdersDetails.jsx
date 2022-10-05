@@ -6,6 +6,7 @@ import api from '../../services/Api';
 
 export default function SellerOrders() {
   const [details, setDetails] = useState([]);
+  const [reload, setReload] = useState();
   const params = useParams();
 
   const handleFetch = async () => {
@@ -20,9 +21,35 @@ export default function SellerOrders() {
     }
   };
 
+  const handleButton = async (target) => {
+    const { name } = target;
+    const { id } = params;
+    switch (name) {
+    case 'preparando':
+      try {
+        await api.put(`/customer/orders/${id}`, { status: 'Preparando' });
+        console.log('isso ae');
+        setReload(0);
+      } catch (error) {
+        return error;
+      }
+      break;
+    case 'emTransito':
+      try {
+        await api.put(`/customer/orders/${id}`, { status: 'Em Trânsito' });
+        console.log('isso ai');
+        setReload(1);
+      } catch (error) {
+        return error;
+      }
+      break;
+    default:
+    }
+  };
+
   useEffect(() => {
     handleFetch();
-  }, []);
+  }, [reload]);
 
   return (
     <main>
@@ -52,24 +79,30 @@ export default function SellerOrders() {
                 </p>
                 <p
                   data-testid={
-                    `${pageName}element-order-details-label-delivery-status-${id}`
+                    `${pageName}element-order-details-label-delivery-status`
                   }
                 >
                   {status}
                 </p>
                 <button
                   type="button"
+                  name="preparando"
                   data-testid={
                     `${pageName}button-preparing-check`
                   }
+                  disabled={ status !== 'Pendente' }
+                  onClick={ (e) => handleButton(e.target) }
                 >
                   Preparando pedidos
                 </button>
                 <button
                   type="button"
+                  name="emTransito"
+                  disabled={ status !== 'Preparando' }
                   data-testid={ `${pageName}button-dispatch-check` }
+                  onClick={ (e) => handleButton(e.target) }
                 >
-                  Marcar como Entregue
+                  Em Trânsito
                 </button>
               </div>
               <div key={ index } hover>

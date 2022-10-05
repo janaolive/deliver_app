@@ -33,10 +33,12 @@ const customerService = {
     return customersById;
   },
 
-  async updateCust(id, data) {
-    const customersUpdated = await models.Sale.findByPk(id);
-    await customersUpdated.update(data, { where: { id } });
-    return customersUpdated;
+  async updateSaleStatus(id, status) {
+    try {
+      return models.Sale.update({ status }, { where: { id } });
+    } catch (error) {
+      throw new Error('deu ruim');
+    }
   },
 };
 

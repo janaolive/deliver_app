@@ -6,6 +6,7 @@ import api from '../../services/Api';
 
 export default function CustomOrdersDetails() {
   const [details, setDetails] = useState([]);
+  const [reload, setReload] = useState();
   const params = useParams();
 
   const handleFetch = async () => {
@@ -20,9 +21,18 @@ export default function CustomOrdersDetails() {
     }
   };
 
+  const handleButton = async () => {
+    const { id } = params;
+    try {
+      await api.put(`/customer/orders/${id}`, { status: 'Entregue' });
+      setReload(0);
+    } catch (error) {
+      return error;
+    }
+  };
   useEffect(() => {
     handleFetch();
-  }, []);
+  }, [reload]);
 
   return (
     <main>
@@ -58,9 +68,10 @@ export default function CustomOrdersDetails() {
                   {status}
                 </p>
                 <button
-                  disabled
+                  disabled={ status !== 'Em Trânsito' }
                   type="button"
                   data-testid={ `${pageName}button-delivery-check` }
+                  onClick={ handleButton }
                 >
                   Marcar como Entregue
                 </button>
