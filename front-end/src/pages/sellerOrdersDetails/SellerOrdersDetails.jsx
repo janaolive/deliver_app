@@ -1,140 +1,151 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import NavBar from '../products/components/NavBar';
 // import { Card, CardBody, CardTitle, CardText, Button, Input } from 'reactstrap';
 import api from '../../services/Api';
 
 export default function SellerOrders() {
-  const [order, setOrder] = useState([]);
-  const [products, setProducts] = useState([]);
   const [details, setDetails] = useState([]);
+  const params = useParams();
 
   const handleFetch = async () => {
     try {
-      const orderId = JSON.parse(localStorage.getItem('orderDetails'));
-      const { id } = orderId.data;
-      const product = await api.get(`/sale/orders/${id}`);
-      setOrder(product.data);
-      setProducts(product.data.products);
+      const detailsList = await api.get('/seller/orders');
+      const sales = detailsList.data;
+      const result = await sales.filter((sale) => sale.id === Number(params.id));
+      console.log(result);
+      setDetails(result);
     } catch (error) {
       return error;
     }
-  };
-
-  const detailsProducts = async (items) => {
-    setDetails([]);
-    items?.map(async (item) => {
-      const result = await api.get(`/customer/products/${item.productId}`);
-      return details.push(result.data);
-    });
   };
 
   useEffect(() => {
     handleFetch();
   }, []);
 
-  useEffect(() => {
-    detailsProducts();
-  }, [products]);
-
-  // const makeDate = () => {
-  //   const { saleDate } = products;
-  //   const newDate = saleDate.toLocaleDateString('pt-BR')
-  //     .substr(0, 10).split('-').reverse()
-  //     .join('/');
-  //   products.push(newDate);
-  //   return newDate;
-  // };
-
-  const makeProducts = (product, index) => {
-    const { name, price } = product;
-    const { quantity } = product.SaleProduct;
-    return (
-      <div key={ index }>
-        <table>
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Descrição</th>
-              <th>Quantidade</th>
-              <th>Valor Unitário</th>
-              <th>Sub-Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td
-                data-testid={ `seller_order_details__element-order-table-item-number-
-            ${index}` }
-              >
-                {index + 1}
-              </td>
-              <td
-                data-testid={ `seller_order_details__element-order-table-name-${index}` }
-              >
-                {name}
-              </td>
-              <td
-                data-testid={ `seller_order_details__element-order-table-quantity-
-              ${index}` }
-              >
-                {quantity}
-              </td>
-              <td
-                data-testid={ `seller_order_details__element-order-table-unit-price-
-            ${index}` }
-              >
-                {`${price.replace('.', ',')}`}
-              </td>
-              <td
-                data-testid={ `seller_order_details__element-order-table-sub-total-
-              ${index}` }
-              >
-                R$
-                {`${price.replace('.', ',')}`}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <footer>
-          <h2 data-testid="seller_order_details__element-order-total-price">
-            Total:
-            {' '}
-            {quantity * price}
-          </h2>
-        </footer>
-      </div>
-    );
-  };
-
-  const { status, id, saleDate } = order;
   return (
-    <>
-      <h4>Detalhes do Pedido</h4>
-      <div>
-        <h3
-          data-testid={
-            `seller_order_details__element-order-details-label-order-${id}`
-          }
-        >
-          {`PEDIDO 000${id}`}
-        </h3>
-        <span data-testid="seller_order_details__element-order-details-label-order-date">
-          {saleDate
-            ? saleDate.split('T')[0].split('-').reverse().join('/')
-            : null}
-        </span>
-        <h3
-          data-testid="seller_order_details__element-order-details-label-delivery-status"
-        >
-          {status}
-        </h3>
-        <button type="submit" data-testid="seller_order_details__button-preparing-check">
-          PREPARAR PEDIDO
-        </button>
-        <button type="submit" data-testid="seller_order_details__button-dispatch-check">
-          SAIU PARA ENTREGA
-        </button>
-      </div>
-      { products.map((product, index) => makeProducts(product, index))}
-    </>
+    <main>
+      <NavBar />
+      <h3>Detalhe do Pedido</h3>
+      {
+        details.map((item, index) => {
+          const { id, saleDate, status, seller, products } = item;
+          const pageName = 'seller_order_details__';
+          return (
+            <section key={ index }>
+              <div>
+                <p
+                  data-testid={ `${pageName}element-order-details-label-order-id` }
+                >
+                  {`Pedido: ${id}`}
+                </p>
+                <p
+                  data-testid={ `${pageName}element-order-details-label-seller-name` }
+                >
+                  {`P.Vend: ${seller.name}` }
+                </p>
+                <p
+                  data-testid={ `${pageName}element-order-details-label-order-date` }
+                >
+                  {saleDate.split('T')[0].split('-').reverse().join('/')}
+                </p>
+                <p
+                  data-testid={
+                    `${pageName}element-order-details-label-delivery-status-${id}`
+                  }
+                >
+                  {status}
+                </p>
+                <button
+                  type="button"
+                  data-testid={
+                    `${pageName}button-preparing-check`
+                  }
+                >
+                  Preparando pedidos
+                </button>
+                <button
+                  type="button"
+                  data-testid={ `${pageName}button-dispatch-check` }
+                >
+                  Marcar como Entregue
+                </button>
+              </div>
+              <div key={ index } hover>
+                <thead>
+                  <tr>
+                    <th>
+                      Item
+                    </th>
+                    <th>
+                      Descrição
+                    </th>
+                    <th>
+                      Quantidade
+                    </th>
+                    <th>
+                      Valor Unitario
+                    </th>
+                    <th>
+                      Sub-total
+                    </th>
+                  </tr>
+                </thead>
+                { products.map((product, pIndex) => {
+                  const preco = product.price * product.SaleProduct.quantity;
+                  const subtotal = preco.toFixed(2).toString().replace('.', ',');
+                  return (
+                    <tbody key={ pIndex }>
+                      <tr>
+                        <th
+                          scope="row"
+                          data-testid={
+                            `${pageName}element-order-table-item-number-${pIndex}`
+                          }
+                        >
+                          { pIndex + 1 }
+                        </th>
+                        <td
+                          data-testid={ `${pageName}element-order-table-name-${pIndex}` }
+                        >
+                          { product.name }
+                        </td>
+                        <td
+                          data-testid={
+                            `${pageName}element-order-table-quantity-${pIndex}`
+                          }
+                        >
+                          { product.SaleProduct.quantity}
+                        </td>
+                        <td
+                          data-testid={
+                            `${pageName}element-order-table-unit-price-${pIndex}`
+                          }
+                        >
+                          { product.price.replace('.', ',') }
+                        </td>
+                        <td
+                          data-testid={
+                            `${pageName}element-order-table-sub-total-${pIndex}`
+                          }
+                        >
+                          { subtotal }
+                        </td>
+                      </tr>
+                    </tbody>
+                  );
+                })}
+              </div>
+              <div
+                data-testid={ `${pageName}element-order-total-price` }
+              >
+                {item.totalPrice.replace('.', ',')}
+              </div>
+            </section>
+          );
+        })
+      }
+    </main>
   );
 }

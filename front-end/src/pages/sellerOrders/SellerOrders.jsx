@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // import { Card, CardBody, CardTitle, CardText, Button, Input } from 'reactstrap';
 import api from '../../services/Api';
+import NavBar from '../products/components/NavBar';
 
 export default function SellerOrders() {
   const [order, setOrder] = useState([]);
-  const redirect = useNavigate();
 
   const handleFetch = async () => {
     try {
@@ -25,7 +25,6 @@ export default function SellerOrders() {
       const { id } = target;
       const orderDetails = await api.get(`/seller/orders/${id}`);
       localStorage.setItem('orderDetails', JSON.stringify(orderDetails));
-      redirect(`${id}`);
     } catch (error) {
       return error;
     }
@@ -33,9 +32,8 @@ export default function SellerOrders() {
 
   const makeProducts = (product, index) => {
     const { status, id, totalPrice, deliveryAddress, deliveryNumber, saleDate } = product;
-    console.log(product);
     return (
-      <div key={ index }>
+      <Link to={ `/seller/orders/${id}` } key={ index }>
         <div>
           <button
             id={ id }
@@ -67,12 +65,13 @@ export default function SellerOrders() {
           { `${deliveryAddress}, ${deliveryNumber}` }
         </span>
 
-      </div>
+      </Link>
     );
   };
 
   return (
     <>
+      <NavBar />
       { order.map((item, index) => makeProducts(item, index))}
     </>
   );
