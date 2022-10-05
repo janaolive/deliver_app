@@ -33,6 +33,7 @@ export default function SellerOrders() {
 
   const makeProducts = (product, index) => {
     const { status, id, totalPrice, deliveryAddress, deliveryNumber, saleDate } = product;
+    console.log(product);
     return (
       <div key={ index }>
         <div>
@@ -40,14 +41,9 @@ export default function SellerOrders() {
             id={ id }
             type="button"
             onClick={ (e) => handleClick(e.target) }
-            data-testid={
-              `seller_order_details__element-order-details-label-order-${id}`
-            }
+            data-testid={ `seller_orders__element-order-id-${id}` }
           >
-
-            Pedido 000
             {id}
-
           </button>
         </div>
 
