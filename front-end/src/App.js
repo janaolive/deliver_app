@@ -7,8 +7,9 @@ import NotFound from './pages/notFound';
 import Checkout from './pages/checkout/Checkout';
 import CustomerProducts from './pages/products/CustomerProducts';
 import CustomerOrders from './pages/products/CustomerOrders';
-import SellerOrdersDetailsPage from './pages/sellerOrdersDetails/SellerOrdersDetailsPage';
-import SellerOrdersPage from './pages/sellerOrders/SellerOrdersPage';
+import CustomOrdersDetails from './pages/products/CustomerOrdersDetails';
+import SellerOrders from './pages/sellerOrders/SellerOrders';
+import SellerOrdersDetails from './pages/sellerOrdersDetails/SellerOrdersDetails';
 
 function App() {
   return (
@@ -20,12 +21,9 @@ function App() {
           <Route exact path="/customer/products" element={ <CustomerProducts /> } />
           <Route exact path="/customer/checkout" element={ <Checkout /> } />
           <Route exact path="/customer/orders" element={ <CustomerOrders /> } />
-          <Route
-            exact
-            path="/seller/orders/:id"
-            element={ <SellerOrdersDetailsPage /> }
-          />
-          <Route exact path="/seller/orders" element={ <SellerOrdersPage /> } />
+          <Route exact path="/customer/orders/:id" element={ <CustomOrdersDetails /> } />
+          <Route exact path="/seller/orders" element={ <SellerOrders /> } />
+          <Route exact path="/seller/orders/:id" element={ <SellerOrdersDetails /> } />
           <Route exact path="/admin/manage" element={ <NotFound /> } />
           <Route exact path="/" element={ <Navigate to="/login" /> } />
         </Routes>

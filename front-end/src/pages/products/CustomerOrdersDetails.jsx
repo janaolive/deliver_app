@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+/* import { Button, ListGroup, ListGroupItem, Table } from 'reactstrap'; */
 import { useParams } from 'react-router-dom';
-// import { Card, CardBody, CardTitle, CardText, Button, Input } from 'reactstrap';
+import NavBar from './components/NavBar';
 import api from '../../services/Api';
-import NavBarSeller from './NavBarSeller';
 
-export default function SellerOrders() {
+export default function CustomOrdersDetails() {
   const [details, setDetails] = useState([]);
   const [reload, setReload] = useState();
   const params = useParams();
@@ -17,51 +17,34 @@ export default function SellerOrders() {
       console.log(result);
       setDetails(result);
     } catch (error) {
+      throw new Error('teste');
+    }
+  };
+
+  const handleButton = async () => {
+    const { id } = params;
+    try {
+      await api.put(`/customer/orders/${id}`, { status: 'Entregue' });
+      setReload(0);
+    } catch (error) {
       return error;
     }
   };
-
-  const handleButton = async (target) => {
-    const { name } = target;
-    const { id } = params;
-    switch (name) {
-    case 'preparando':
-      try {
-        await api.put(`/customer/orders/${id}`, { status: 'Preparando' });
-        console.log('isso ae');
-        setReload(0);
-      } catch (error) {
-        return error;
-      }
-      break;
-    case 'emTransito':
-      try {
-        await api.put(`/customer/orders/${id}`, { status: 'Em Trânsito' });
-        console.log('isso ai');
-        setReload(1);
-      } catch (error) {
-        return error;
-      }
-      break;
-    default:
-    }
-  };
-
   useEffect(() => {
     handleFetch();
   }, [reload]);
 
   return (
     <main>
-      <NavBarSeller />
+      <NavBar />
       <h3>Detalhe do Pedido</h3>
       {
         details.map((item, index) => {
           const { id, saleDate, status, seller, products } = item;
-          const pageName = 'seller_order_details__';
+          const pageName = 'customer_order_details__';
           return (
             <section key={ index }>
-              <div>
+              <div horizontal>
                 <p
                   data-testid={ `${pageName}element-order-details-label-order-id` }
                 >
@@ -79,30 +62,18 @@ export default function SellerOrders() {
                 </p>
                 <p
                   data-testid={
-                    `${pageName}element-order-details-label-delivery-status`
+                    `${pageName}element-order-details-label-delivery-status-${id}`
                   }
                 >
                   {status}
                 </p>
                 <button
+                  disabled={ status !== 'Em Trânsito' }
                   type="button"
-                  name="preparando"
-                  data-testid={
-                    `${pageName}button-preparing-check`
-                  }
-                  disabled={ status !== 'Pendente' }
-                  onClick={ (e) => handleButton(e.target) }
+                  data-testid={ `${pageName}button-delivery-check` }
+                  onClick={ handleButton }
                 >
-                  Preparando pedidos
-                </button>
-                <button
-                  type="button"
-                  name="emTransito"
-                  disabled={ status !== 'Preparando' }
-                  data-testid={ `${pageName}button-dispatch-check` }
-                  onClick={ (e) => handleButton(e.target) }
-                >
-                  Em Trânsito
+                  Marcar como Entregue
                 </button>
               </div>
               <div key={ index } hover>

@@ -15,9 +15,10 @@ const customerController = {
     const customersById = await customerService.findById(id);
     return res.status(200).json(customersById);
   },
-  async updateCustomer(req, res) {
+  async updateSaleStatus(req, res) {
     const { id } = req.params;
-    const customersUpdate = await customerService.updateCust(id, req.body);
+    const { status } = req.body;
+    const customersUpdate = await customerService.updateSaleStatus(id, status);
     return res.status(200).json(customersUpdate);
   },
 

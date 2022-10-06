@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // import { Card, CardBody, CardTitle, CardText, Button, Input } from 'reactstrap';
 import api from '../../services/Api';
+import NavBarSeller from '../sellerOrdersDetails/NavBarSeller';
 
 export default function SellerOrders() {
   const [order, setOrder] = useState([]);
-  const redirect = useNavigate();
 
   const handleFetch = async () => {
     try {
@@ -25,7 +25,6 @@ export default function SellerOrders() {
       const { id } = target;
       const orderDetails = await api.get(`/seller/orders/${id}`);
       localStorage.setItem('orderDetails', JSON.stringify(orderDetails));
-      redirect(`${id}`);
     } catch (error) {
       return error;
     }
@@ -34,20 +33,15 @@ export default function SellerOrders() {
   const makeProducts = (product, index) => {
     const { status, id, totalPrice, deliveryAddress, deliveryNumber, saleDate } = product;
     return (
-      <div key={ index }>
+      <Link to={ `/seller/orders/${id}` } key={ index }>
         <div>
           <button
             id={ id }
             type="button"
             onClick={ (e) => handleClick(e.target) }
-            data-testid={
-              `seller_order_details__element-order-details-label-order-${id}`
-            }
+            data-testid={ `seller_orders__element-order-id-${id}` }
           >
-
-            Pedido 000
             {id}
-
           </button>
         </div>
 
@@ -71,12 +65,13 @@ export default function SellerOrders() {
           { `${deliveryAddress}, ${deliveryNumber}` }
         </span>
 
-      </div>
+      </Link>
     );
   };
 
   return (
     <>
+      <NavBarSeller />
       { order.map((item, index) => makeProducts(item, index))}
     </>
   );
