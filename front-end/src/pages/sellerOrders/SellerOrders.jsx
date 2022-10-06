@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { Card, CardBody, CardTitle, CardText, Button, Input } from 'reactstrap';
 import api from '../../services/Api';
-import NavBar from '../products/components/NavBar';
+import NavBarSeller from '../sellerOrdersDetails/NavBarSeller';
 
 export default function SellerOrders() {
   const [order, setOrder] = useState([]);
@@ -71,7 +71,7 @@ export default function SellerOrders() {
 
   return (
     <>
-      <NavBar />
+      <NavBarSeller />
       { order.map((item, index) => makeProducts(item, index))}
     </>
   );

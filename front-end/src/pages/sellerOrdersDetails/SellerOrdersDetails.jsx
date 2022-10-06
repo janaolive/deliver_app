@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import NavBar from '../products/components/NavBar';
 // import { Card, CardBody, CardTitle, CardText, Button, Input } from 'reactstrap';
 import api from '../../services/Api';
+import NavBarSeller from './NavBarSeller';
 
 export default function SellerOrders() {
   const [details, setDetails] = useState([]);
@@ -53,7 +53,7 @@ export default function SellerOrders() {
 
   return (
     <main>
-      <NavBar />
+      <NavBarSeller />
       <h3>Detalhe do Pedido</h3>
       {
         details.map((item, index) => {
