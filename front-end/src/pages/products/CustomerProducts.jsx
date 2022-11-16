@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardBody, CardTitle, CardText, Button, Input } from 'reactstrap';
-
 import api from '../../services/Api';
 import CarShop from './components/CarShop';
 import NavBar from './components/NavBar';
@@ -30,7 +29,7 @@ export default function CustomProducts() {
         [name]:
           { name, id, price, quantity: productQnt, subTotal: sub,
           } }));
-      console.log(id);
+      // console.log(id);
       break;
     case 'menos':
       if (productQnt > 0) {
@@ -86,7 +85,7 @@ export default function CustomProducts() {
         <img
           alt={ name }
           src={ urlImage }
-          className="imgSize img-fluid img-thumbnail"
+          className="img-responsive imgSize img-fluid img-thumbnail"
           data-testid={ `customer_products__img-card-bg-image-${id}` }
         />
         <CardBody className="bodyCard">
@@ -137,6 +136,7 @@ export default function CustomProducts() {
   const handleFetch = async () => {
     try {
       const product = await api.get('/customer/products');
+      console.log(product);
       setProducts(product.data);
       const nameMap = product.data.map(({ name, id, price }) => ({ name, id, price }))
         .reduce((acc, curr) => {
@@ -154,9 +154,11 @@ export default function CustomProducts() {
       setError(true);
     }
   };
+
   useEffect(() => {
     setTotal(totalPrice(subTotal));
   }, [subTotal]);
+
   useEffect(() => {
     localStorage.setItem('products', JSON.stringify(valueState));
   }, [valueState]);
@@ -164,6 +166,7 @@ export default function CustomProducts() {
   useEffect(() => {
     handleFetch();
   }, []);
+
   return (
     <main>
       <NavBar />

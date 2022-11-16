@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, FormGroup, Input, Label, Button, Alert, Container } from 'reactstrap';
 import UserContext from '../../context/user/context';
@@ -22,7 +22,7 @@ export default function LoginForm() {
     </Alert>);
 
   const redirect = useNavigate();
-  async function redirectUser(user) {
+  function redirectUser(user) {
     switch (user.role) {
     case 'customer':
       redirect('/customer/products');
@@ -40,14 +40,21 @@ export default function LoginForm() {
   const handleSubmit = async () => {
     try {
       const login = await api.post('/login', { email, password });
+      const seller = await api.get('/login');
       setUser(login);
-      console.log(login.data);
+      // console.log(login.data);
       localStorage.setItem('user', JSON.stringify(login.data));
-      await redirectUser(login.data);
+      localStorage.setItem('seller', JSON.stringify(seller.data));
+      redirectUser(login.data);
     } catch (error) {
       setError(true);
     }
   };
+
+  useEffect(() => {
+    const usuario = JSON.parse(localStorage.getItem('user'));
+    if (usuario) redirectUser(usuario);
+  }, []);
 
   return (
     <main
@@ -55,7 +62,7 @@ export default function LoginForm() {
     >
       <div className="titleDiv">
         <img className="logoBeer" src={ logo } alt="logo do app" />
-        <h1 className="title">Grupo 11</h1>
+        <h1 className="title">Ubiritis</h1>
       </div>
       <Container className="container text-center  bg-light border">
         <Form>

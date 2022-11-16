@@ -3,9 +3,11 @@ const customerController = require('../controllers/customerController');
 
 const customerRouter = Router();
 
+customerRouter.get('/products/:id', customerController.findProductById);
 customerRouter.get('/products', customerController.findAll);
-customerRouter.post('/checkout', customerController.addCustomer);
-customerRouter.put('/orders/:id', customerController.upDateCustomer);
-customerRouter.get('/orders/:id', customerController.getByIdcustomer);
+customerRouter.post('/orders', customerController.addCustomer);
+
+customerRouter.put('/orders/:id', customerController.updateSaleStatus);
+customerRouter.get('/orders/:id', customerController.getByIdCustomer);
 
 module.exports = customerRouter;

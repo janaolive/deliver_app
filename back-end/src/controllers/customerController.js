@@ -10,15 +10,22 @@ const customerController = {
     const response = await customerService.customer(req.body);
     return res.status(201).json(response);
   },
-  async getByIdcustomer(req, res) {
+  async getByIdCustomer(req, res) {
     const { id } = req.params;
     const customersById = await customerService.findById(id);
     return res.status(200).json(customersById);
   },
-  async upDateCustomer(req, res) {
+  async updateSaleStatus(req, res) {
     const { id } = req.params;
-    const customersUpdate = await customerService.updateCust(id, req.body);
+    const { status } = req.body;
+    const customersUpdate = await customerService.updateSaleStatus(id, status);
     return res.status(200).json(customersUpdate);
+  },
+
+  async findProductById(req, res) {
+    const { id } = req.params;
+    const product = await customerService.findProductById(id);
+    return res.status(200).json(product);
   },
 };
 

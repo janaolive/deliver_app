@@ -5,6 +5,11 @@ const customerService = {
     const result = await models.Product.findAll({ raw: true });
     return result;
   },
+  
+  async findProductById(id) {
+    const product = await models.Product.findByPk(id);
+    return product;
+  },
 
   async customer(data) {
     const { products, ...sale } = data;
@@ -28,10 +33,12 @@ const customerService = {
     return customersById;
   },
 
-  async updateCust(id, data) {
-    const customersUpdated = await models.Sale.findByPk(id);
-    await customersUpdated.update(data, { where: { id } });
-    return customersUpdated;
+  async updateSaleStatus(id, status) {
+    try {
+      return models.Sale.update({ status }, { where: { id } });
+    } catch (error) {
+      throw new Error('deu ruim');
+    }
   },
 };
 
